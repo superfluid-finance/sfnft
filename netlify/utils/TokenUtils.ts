@@ -42,7 +42,6 @@ export const timeUnitWordMap: Record<UnitOfTime, string> = {
 export const getPrettyEtherValue = (weiValue: string) => {
   const etherValue = new Decimal(formatUnits(weiValue, "ether"));
   const decimalsToRoundTo = getDecimalPlacesToRoundTo(etherValue);
-  console.log(etherValue.toString());
   return etherValue.toDP(decimalsToRoundTo).toString();
 };
 
