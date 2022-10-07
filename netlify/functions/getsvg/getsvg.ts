@@ -18,13 +18,13 @@ const handler = async (event: NFTRequestEvent) => {
     const prettyFlowRate = getPrettyEtherFlowRate(flowRate || "0");
 
     const senderAbbr = sender
-      ? `${sender.substr(0, 6)}…${sender.substr(
+      ? `${sender.substring(0, 6)}…${sender.substring(
           sender.length - 4,
           sender.length
         )}`
       : "";
     const receiverAbbr = receiver
-      ? `${receiver.substr(0, 6)}…${receiver.substr(
+      ? `${receiver.substring(0, 6)}…${receiver.substring(
           receiver.length - 4,
           receiver.length
         )}`
