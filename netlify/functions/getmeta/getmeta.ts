@@ -1,7 +1,21 @@
 import { DashboardNetworkSlugs } from "../../utils/NetworkUtils";
+import { Event } from "@netlify/functions/dist/function/event";
+
+export interface NFTRequestEvent extends Event {
+  queryStringParameters: {
+    chain_id?: string;
+    token_address?: string;
+    token_symbol?: string;
+    token_decimals?: string;
+    sender?: string;
+    receiver?: string;
+    flowRate?: string;
+    start_date?: string;
+  };
+}
 
 // Docs on event and context https://docs.netlify.com/functions/build/#code-your-function-2
-export const handler = async (event) => {
+export const handler = async (event: NFTRequestEvent) => {
   try {
     console.log(`event: ${JSON.stringify(event, null, 2)}`);
 
@@ -15,10 +29,6 @@ export const handler = async (event) => {
 
     return {
       statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET",
-      },
       body: JSON.stringify({
         name: `Superfluid Stream`,
         description: `This NFT represents a ${

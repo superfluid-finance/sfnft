@@ -3,9 +3,10 @@ import {
   getPrettyEtherFlowRate,
   timeUnitWordMap,
 } from "../../utils/TokenUtils";
+import { NFTRequestEvent } from "../getmeta/getmeta";
 
 // Docs on event and context https://docs.netlify.com/functions/build/#code-your-function-2
-const handler = async (event) => {
+const handler = async (event: NFTRequestEvent) => {
   try {
     const { token_symbol, sender, receiver, flowRate, start_date } =
       event.queryStringParameters;
@@ -14,16 +15,20 @@ const handler = async (event) => {
       ? `${format(new Date(Number(start_date) * 1000), "d LLL yyyy HH:mm")} UTC`
       : "NaN";
 
-    const prettyFlowRate = getPrettyEtherFlowRate(flowRate);
+    const prettyFlowRate = getPrettyEtherFlowRate(flowRate || "0");
 
-    const senderAbbr = `${sender.substr(0, 6)}…${sender.substr(
-      sender.length - 4,
-      sender.length
-    )}`;
-    const receiverAbbr = `${receiver.substr(0, 6)}…${receiver.substr(
-      receiver.length - 4,
-      receiver.length
-    )}`;
+    const senderAbbr = sender
+      ? `${sender.substr(0, 6)}…${sender.substr(
+          sender.length - 4,
+          sender.length
+        )}`
+      : "";
+    const receiverAbbr = receiver
+      ? `${receiver.substr(0, 6)}…${receiver.substr(
+          receiver.length - 4,
+          receiver.length
+        )}`
+      : "";
 
     const retStr = `
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="700" height="700" viewBox="0 0 700 700" fill="none">
@@ -239,10 +244,7 @@ const handler = async (event) => {
       body: retStr,
       headers: {
         "Content-Type": "image/svg+xml",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET",
       },
-      // isBase64Encoded: true,
     };
   } catch (error) {
     return { statusCode: 500, body: error.toString() };
