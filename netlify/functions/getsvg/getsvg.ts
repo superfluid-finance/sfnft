@@ -239,6 +239,8 @@ const handler = async (event) => {
       body: retStr,
       headers: {
         "Content-Type": "image/svg+xml",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET",
       },
       // isBase64Encoded: true,
     };
