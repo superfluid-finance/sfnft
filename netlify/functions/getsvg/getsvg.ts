@@ -31,7 +31,7 @@ const handler = async (event: NFTRequestEvent) => {
       : "";
 
     const retStr = `
-    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="700" height="700" viewBox="0 0 700 700" fill="none">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="500" viewBox="0 0 700 700" fill="none">
         <defs>
             <path id="text_path_1906_250620" d="M 82 32 H 618 Q 668 32 668 82 V 618 Q 668 668 618 668 H 82 Q 32 668 32 618 L 32 82 Q 32 32 82 32" />
 
@@ -84,37 +84,37 @@ const handler = async (event: NFTRequestEvent) => {
             <!-- Stream animation lines -->
             <g style="mix-blend-mode:overlay">
                 <rect x="0" y="505" width="71" height="9" fill="white" fill-opacity="0.25">
-                    <animate additive="sum" attributeName="x" from="-71" to="calc(100% + 71px)" begin="100ms" dur="800ms" repeatCount="indefinite"/>
+                    <animate additive="sum" attributeName="x" from="-71" to="100%" begin="100ms" dur="800ms" repeatCount="indefinite"/>
                 </rect>
                 <rect x="0" y="496" width="496" height="4" fill="white" fill-opacity="0.25">
-                    <animate additive="sum" attributeName="x" from="-496" to="calc(100% + 496px)" begin="0s" dur="900ms" repeatCount="indefinite"/>
+                    <animate additive="sum" attributeName="x" from="-496" to="100%" begin="0s" dur="900ms" repeatCount="indefinite"/>
                 </rect>
                 <rect x="0" y="490" width="333" height="11" fill="white" fill-opacity="0.25">
-                    <animate additive="sum" attributeName="x" from="-333" to="calc(100% + 333px)" begin="100ms" dur="1600ms" repeatCount="indefinite"/>
+                    <animate additive="sum" attributeName="x" from="-333" to="100%" begin="100ms" dur="1600ms" repeatCount="indefinite"/>
                 </rect>
                 <rect x="0" y="476" width="299" height="4" fill="white">
-                    <animate additive="sum" attributeName="x" from="-299" to="calc(100% + 299px)" begin="0s" dur="700ms" repeatCount="indefinite"/>
+                    <animate additive="sum" attributeName="x" from="-299" to="100%" begin="0s" dur="700ms" repeatCount="indefinite"/>
                 </rect>
                 <rect x="0" y="513" width="230" height="8" fill="white">
-                    <animate additive="sum" attributeName="x" from="-230" to="calc(100% + 230px)" begin="0s" dur="800ms" repeatCount="indefinite"/>
+                    <animate additive="sum" attributeName="x" from="-230" to="100%" begin="0s" dur="800ms" repeatCount="indefinite"/>
                 </rect>
                 <rect x="0" y="505" width="254" height="4" fill="white">
-                    <animate additive="sum" attributeName="x" from="-254" to="calc(100% + 254px)" begin="100ms" dur="900ms" repeatCount="indefinite"/>
+                    <animate additive="sum" attributeName="x" from="-254" to="100%" begin="100ms" dur="900ms" repeatCount="indefinite"/>
                 </rect>
                 <rect x="0" y="455" width="78" height="8" fill="white">
-                    <animate additive="sum" attributeName="x" from="-78" to="calc(100% + 78px)" begin="0s" dur="1000ms" repeatCount="indefinite"/>
+                    <animate additive="sum" attributeName="x" from="-78" to="100%" begin="0s" dur="1000ms" repeatCount="indefinite"/>
                 </rect>
                 <rect x="0" y="467" width="128" height="8" fill="white" fill-opacity="0.25">
-                    <animate additive="sum" attributeName="x" from="-128" to="calc(100% + 128px)" begin="0s" dur="1200ms" repeatCount="indefinite"/>
+                    <animate additive="sum" attributeName="x" from="-128" to="100%" begin="0s" dur="1200ms" repeatCount="indefinite"/>
                 </rect>
                 <rect x="0" y="511" width="80" height="4" fill="white" fill-opacity="0.25">
-                    <animate additive="sum" attributeName="x" from="-80" to="calc(100% + 80px)" begin="100ms" dur="900ms" repeatCount="indefinite"/>
+                    <animate additive="sum" attributeName="x" from="-80" to="100%" begin="100ms" dur="900ms" repeatCount="indefinite"/>
                 </rect>
                 <rect x="0" y="465" width="568" height="4" fill="white">
-                    <animate additive="sum" attributeName="x" from="-568" to="calc(100% + 568px)" begin="0s" dur="1000ms" repeatCount="indefinite"/>
+                    <animate additive="sum" attributeName="x" from="-568" to="100%" begin="0s" dur="1000ms" repeatCount="indefinite"/>
                 </rect>
                 <rect x="0" y="442" width="568" height="8" fill="white" fill-opacity="0.25">
-                    <animate additive="sum" attributeName="x" from="-568" to="calc(100% + 568px)" begin="0s" dur="2000ms" repeatCount="indefinite"/>
+                    <animate additive="sum" attributeName="x" from="-568" to="100%" begin="0s" dur="2000ms" repeatCount="indefinite"/>
                 </rect>
             </g>
 
