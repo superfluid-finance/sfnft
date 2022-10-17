@@ -25,11 +25,15 @@ export const handler = async (event: NFTRequestEvent) => {
 
     // best guess for testing, should be config provided for prod
     const baseURL = `https://${event.headers.host}`;
-    const imageUrl = `${baseURL}/.netlify/functions/getsvg?${event.rawQuery}`;
+    const imageUrl = `${baseURL}/cfa/v1/getsvg?${event.rawQuery}`;
     const streamUrl = `https://app.superfluid.finance/stream/${DashboardNetworkSlugs[chain_id]}/${sender}-${receiver}-${token_address}`;
 
     return {
       statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         name: `Superfluid Stream`,
         description: `This NFT represents a ${
