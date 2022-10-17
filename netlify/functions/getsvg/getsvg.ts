@@ -1,13 +1,17 @@
-import { format, parseISO } from "date-fns";
+import { format } from "date-fns";
+import { shortenHex } from "../../utils/StringUtils";
 import {
   getPrettyEtherFlowRate,
   timeUnitWordMap,
 } from "../../utils/TokenUtils";
+import { NFTRequestQuerySchema } from "../../utils/ValidationUtils";
 import { NFTRequestEvent } from "../getmeta/getmeta";
 
 // Docs on event and context https://docs.netlify.com/functions/build/#code-your-function-2
-const handler = async (event: NFTRequestEvent) => {
+export const handler = async (event: NFTRequestEvent) => {
   try {
+    await NFTRequestQuerySchema.validate(event.queryStringParameters);
+
     const { token_symbol, sender, receiver, flowRate, start_date } =
       event.queryStringParameters;
 
@@ -16,19 +20,8 @@ const handler = async (event: NFTRequestEvent) => {
       : "NaN";
 
     const prettyFlowRate = getPrettyEtherFlowRate(flowRate || "0");
-
-    const senderAbbr = sender
-      ? `${sender.substring(0, 6)}…${sender.substring(
-          sender.length - 4,
-          sender.length
-        )}`
-      : "";
-    const receiverAbbr = receiver
-      ? `${receiver.substring(0, 6)}…${receiver.substring(
-          receiver.length - 4,
-          receiver.length
-        )}`
-      : "";
+    const senderAbbr = shortenHex(sender);
+    const receiverAbbr = shortenHex(receiver);
 
     const retStr = `
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="500" viewBox="0 0 700 700" fill="none">
@@ -250,5 +243,3 @@ const handler = async (event: NFTRequestEvent) => {
     return { statusCode: 500, body: error.toString() };
   }
 };
-
-module.exports = { handler };
