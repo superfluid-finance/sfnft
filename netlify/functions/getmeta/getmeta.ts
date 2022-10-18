@@ -1,6 +1,11 @@
-import { NetworkSlugs } from "../../utils/NetworkUtils";
+import { NetworkNames, NetworkSlugs } from "../../utils/NetworkUtils";
 import { Event } from "@netlify/functions/dist/function/event";
 import { NFTRequestQuerySchema } from "../../utils/ValidationUtils";
+import {
+  getPrettyEtherFlowRate,
+  timeUnitWordMap,
+} from "../../utils/TokenUtils";
+import { getAddress } from "ethers/lib/utils";
 
 export interface NFTRequestEvent extends Event {
   queryStringParameters: {
@@ -31,8 +36,16 @@ export const handler = async (event: NFTRequestEvent) => {
   try {
     await NFTRequestQuerySchema.validate(event.queryStringParameters);
 
-    const { chain_id, sender, receiver, token_address } =
-      event.queryStringParameters;
+    const {
+      chain_id,
+      sender,
+      receiver,
+      token_address,
+      flowRate,
+      token_symbol,
+    } = event.queryStringParameters;
+
+    const prettyFlowRate = getPrettyEtherFlowRate(flowRate || "0");
 
     // best guess for testing, should be config provided for prod
     const baseURL = `https://${event.headers.host}`;
@@ -46,12 +59,24 @@ export const handler = async (event: NFTRequestEvent) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: `Superfluid Stream`,
-        description: `This NFT represents a ${
+        name: `Superfluid Stream - ${prettyFlowRate.amountEther} per ${
+          timeUnitWordMap[prettyFlowRate.unitOfTime]
+        }`,
+        description: `This NFT represents a Superfluid stream.
+        Manage your streams at ${
           streamUrl
-            ? `[Superfluid Constant Flow](${streamUrl})`
-            : "Superfluid Constant Flow"
-        }.`,
+            ? `[app.superfluid.finance](${streamUrl})`
+            : "app.superfluid.finance"
+        }.
+
+        Sender: ${getAddress(sender)}
+        Receiver: ${getAddress(receiver)}
+        Amount: ${prettyFlowRate.amountEther} per ${
+          timeUnitWordMap[prettyFlowRate.unitOfTime]
+        }
+        Token: ${token_symbol}
+        Network: ${NetworkNames[chain_id]}
+`,
         external_url: streamUrl,
         image: imageUrl,
       }),

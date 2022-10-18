@@ -112,9 +112,11 @@ export const handler = async (event: NFTRequestEvent) => {
             <g filter="url(#filter0_d_2168_254947)">
                 <g clip-path="url(#clip2_2168_254947)">
                     <rect x="22.9448" y="202.133" width="125.529" height="41.4246" rx="8.87101" fill="white"/>
-                    <text fill="#12141E" fill-opacity="0.87" xml:space="preserve" style="white-space: pre" font-family="GT Walsheim Pro" font-size="10.6452" letter-spacing="0px">
-                        <tspan x="68.4828" y="219.716">${senderName}</tspan>
-                    </text>
+                    ${
+                      senderName
+                        ? `<text fill="#12141E" fill-opacity="0.87" xml:space="preserve" style="white-space: pre" font-family="GT Walsheim Pro" font-size="10.6452" letter-spacing="0px"><tspan x="68.4828" y="219.716">${senderName}</tspan></text>`
+                        : ""
+                    }
                     <svg x="37.1385" y="213.369" width="18px" height="18px" viewBox="0 0 24 24" clip-path="url(#avatar-clip)">
                       ${
                         senderAvatarData
@@ -123,7 +125,9 @@ export const handler = async (event: NFTRequestEvent) => {
                       }
                     </svg>
                     <text fill="#12141E" fill-opacity="0.87" xml:space="preserve" style="white-space: pre" font-family="GT Walsheim Pro" font-size="9.46241" letter-spacing="0px">
-                        <tspan x="68.4828" y="232.43">${senderAbbr}</tspan>
+                        <tspan x="68.4828" y="${
+                          senderName ? "232.43" : "225"
+                        }">${senderAbbr}</tspan>
                     </text>
                 </g>
                 <rect x="23.2405" y="202.429" width="124.938" height="40.8332" rx="8.5753" stroke="#E0E0E0" stroke-width="0.5914"/>
@@ -137,9 +141,11 @@ export const handler = async (event: NFTRequestEvent) => {
             <g filter="url(#filter1_d_2168_254947)">
                 <g clip-path="url(#clip3_2168_254947)">
                     <rect x="201.526" y="202.133" width="125.529" height="41.4246" rx="8.87101" fill="white"/>
-                    <text fill="#12141E" fill-opacity="0.87" xml:space="preserve" style="white-space: pre" font-family="GT Walsheim Pro" font-size="10.6452" letter-spacing="0px">
-                        <tspan x="247.064" y="219.716">${receiverName}</tspan>
-                    </text>
+                    ${
+                      receiverName
+                        ? `<text fill="#12141E" fill-opacity="0.87" xml:space="preserve" style="white-space: pre" font-family="GT Walsheim Pro" font-size="10.6452" letter-spacing="0px"><tspan x="247.064" y="219.716">${receiverName}</tspan></text>`
+                        : ""
+                    }
                     <svg x="215.893" y="213.369" width="18px" height="18px" viewBox="0 0 24 24" clip-path="url(#avatar-clip)">
                     ${
                       receiverAvatarData
@@ -148,7 +154,9 @@ export const handler = async (event: NFTRequestEvent) => {
                     }
                     </svg>
                     <text fill="#12141E" fill-opacity="0.87" xml:space="preserve" style="white-space: pre" font-family="GT Walsheim Pro" font-size="9.46241" letter-spacing="0px">
-                        <tspan x="247.064" y="232.43">${receiverAbbr}</tspan>
+                        <tspan x="247.064" y="${
+                          receiverName ? "232.43" : "225"
+                        }">${receiverAbbr}</tspan>
                     </text>
                 </g>
                 <rect x="201.822" y="202.429" width="124.938" height="40.8332" rx="8.5753" stroke="#E0E0E0" stroke-width="0.5914"/>
