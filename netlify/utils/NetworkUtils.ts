@@ -1,4 +1,4 @@
-export const DashboardNetworkSlugs = {
+export const NetworkSlugs = {
   5: "goerli",
   100: "gnosis",
   137: "polygon",

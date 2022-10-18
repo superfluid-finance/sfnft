@@ -1,6 +1,7 @@
 import { isAddress } from "ethers/lib/utils";
-import { number, object, string } from "yup";
-import { DashboardNetworkSlugs } from "./NetworkUtils";
+import { object, string, ValidationError } from "yup";
+import { NetworkSlugs } from "./NetworkUtils";
+import { Event } from "@netlify/functions/dist/function/event";
 
 const AddressTest = [
   "validate-address",
@@ -11,7 +12,7 @@ const AddressTest = [
 const ChainTest = [
   "validate-chain",
   "Not valid or supported chain",
-  (value: any) => Object.keys(DashboardNetworkSlugs).includes(value),
+  (value: any) => Object.keys(NetworkSlugs).includes(value),
 ] as const;
 
 export const NFTRequestQuerySchema = object().shape({

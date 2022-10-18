@@ -2,7 +2,12 @@ import Decimal from "decimal.js";
 import { BigNumber } from "ethers";
 import { formatUnits } from "ethers/lib/utils";
 import minBy from "lodash/fp/minBy";
+import fetch from "node-fetch";
 import { getDecimalPlacesToRoundTo } from "./DecimalUtils";
+import { getImageBase64Data } from "./ImageUtils";
+
+const TOKEN_API_URL =
+  "https://raw.githubusercontent.com/superfluid-finance/assets/master/public";
 
 export interface FlowRateEther {
   amountEther: string;
@@ -60,3 +65,26 @@ export const getPrettyEtherFlowRate = (flowRateWei: string): FlowRateEther =>
       BigNumber.from(flowRateWei).mul(UnitOfTime.Month).toString()
     ),
   };
+
+interface TokenManifest {
+  svgIconPath: string;
+}
+
+export const fetchTokenIconData = async (symbol: string) => {
+  const assetKey =
+    symbol === "mStable USD (Polygon PoS)"
+      ? "mstable-usd-polygon-pos"
+      : symbol.toLowerCase();
+
+  return fetch(`${TOKEN_API_URL}/tokens/${assetKey}/manifest.json`)
+    .then((res) => res.json())
+    .then((response) =>
+      getImageBase64Data(
+        `${TOKEN_API_URL}${(response as TokenManifest).svgIconPath}`
+      ).catch((e) => {
+        console.log(e);
+        return undefined;
+      })
+    )
+    .catch(() => undefined);
+};
