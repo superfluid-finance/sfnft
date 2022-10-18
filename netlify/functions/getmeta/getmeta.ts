@@ -10,9 +10,20 @@ export interface NFTRequestEvent extends Event {
     sender: string;
     receiver: string;
     flowRate: string;
-    start_date?: string;
-    token_decimals?: string;
+    start_date: string | undefined;
+    token_decimals: string | undefined;
   };
+}
+
+export interface NFTRequestQuery {
+  chain_id: string;
+  token_address: string;
+  token_symbol: string;
+  sender: string;
+  receiver: string;
+  flowRate: string;
+  start_date: string | undefined;
+  token_decimals: string | undefined;
 }
 
 // Docs on event and context https://docs.netlify.com/functions/build/#code-your-function-2
