@@ -1,4 +1,4 @@
-import { DashboardNetworkSlugs } from "../../utils/NetworkUtils";
+import { NetworkSlugs } from "../../utils/NetworkUtils";
 import { Event } from "@netlify/functions/dist/function/event";
 import { NFTRequestQuerySchema } from "../../utils/ValidationUtils";
 
@@ -26,7 +26,7 @@ export const handler = async (event: NFTRequestEvent) => {
     // best guess for testing, should be config provided for prod
     const baseURL = `https://${event.headers.host}`;
     const imageUrl = `${baseURL}/.netlify/functions/getsvg?${event.rawQuery}`;
-    const streamUrl = `https://app.superfluid.finance/stream/${DashboardNetworkSlugs[chain_id]}/${sender}-${receiver}-${token_address}`;
+    const streamUrl = `https://app.superfluid.finance/stream/${NetworkSlugs[chain_id]}/${sender}-${receiver}-${token_address}`;
 
     return {
       statusCode: 200,
