@@ -1,7 +1,4 @@
-declare const Buffer;
-
 import { ethers } from "ethers";
-import fetch from "node-fetch";
 import { getImageBase64Data } from "./ImageUtils";
 
 export interface ENSAvatarData {

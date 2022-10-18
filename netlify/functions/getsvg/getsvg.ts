@@ -60,25 +60,6 @@ export const handler = async (event: NFTRequestEvent) => {
       !!receiverAvatarData
     );
 
-    const retStr = `
-    <svg width="28" height="84" viewBox="0 0 28 84" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    ${
-      senderAvatarData
-        ? `<image width="28" height="28" xlink:href="${senderAvatarData}" />`
-        : ""
-    }
-    ${
-      receiverAvatarData
-        ? `<image y="28" width="28" height="28" xlink:href="${receiverAvatarData}" />`
-        : ""
-    }
-    ${
-      tokenSymbolData
-        ? `<image y="56" width="28" height="28" xlink:href="${tokenSymbolData}" />`
-        : ""
-    }
-    </svg>`;
-
     const svgString = `
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="350px" height="350px" viewBox="0 0 350 350" fill="none">
         <style>

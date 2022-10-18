@@ -1,7 +1,6 @@
 import { isAddress } from "ethers/lib/utils";
-import { object, string, ValidationError } from "yup";
+import { object, string } from "yup";
 import { NetworkSlugs } from "./NetworkUtils";
-import { Event } from "@netlify/functions/dist/function/event";
 
 const AddressTest = [
   "validate-address",
