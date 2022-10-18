@@ -2,6 +2,7 @@ declare const Buffer;
 
 import { ethers } from "ethers";
 import fetch from "node-fetch";
+import { getImageBase64Data } from "./ImageUtils";
 
 export interface ENSAvatarData {
   type: string;
@@ -20,25 +21,6 @@ const mainnetProvider = new ethers.providers.JsonRpcProvider(
   "mainnet"
 );
 
-export async function getENSData(sender: string, receiver: string) {
-  return promiseWithTimeout(
-    Promise.allSettled([
-      getENSName(sender),
-      getENSName(receiver),
-      getENSAvatar(sender),
-      getENSAvatar(receiver),
-    ]).then((promiseResults) =>
-      promiseResults.map((promiseResult) => {
-        if (promiseResult.status === "fulfilled") {
-          return promiseResult.value;
-        }
-        return undefined;
-      })
-    ),
-    9000
-  );
-}
-
 export async function getENSName(address: string) {
   return mainnetProvider.lookupAddress(address).catch((e) => {
     return undefined;
@@ -49,18 +31,8 @@ export async function getENSAvatar(address: string) {
   return mainnetProvider
     .getAvatar(address)
     .then((avatarUrl) => {
-      console.log("Avatar url", avatarUrl);
       if (!avatarUrl) return Promise.resolve(undefined);
-
-      return fetch(avatarUrl).then((response) =>
-        response
-          .arrayBuffer()
-          .then(
-            (buffer) =>
-              `data:image/${response.headers.get("content-type")};base64,` +
-              Buffer.from(buffer).toString("base64")
-          )
-      );
+      return getImageBase64Data(avatarUrl);
     })
     .catch(() => {
       return undefined;

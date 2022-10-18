@@ -13,7 +13,7 @@ interface Point {
   color: string;
 }
 
-export default class Block {
+export default class Blockie {
   // The random number is a js implementation of the Xorshift PRNG
   randseed = new Array(4); // Xorshift: [x, y, z, w] 32 bit values
   size: number;
@@ -114,5 +114,19 @@ export default class Block {
       }
     }
     return pixels;
+  }
+
+  public getSvgString(scale = 3) {
+    return `<rect x="0" y="0" width="${this.size * scale}" height="${
+      this.size * scale
+    }" fill="${this.bgcolor}" />
+  ${this.pixels
+    .map(
+      ({ x, y, color }) =>
+        `<rect x="${x * scale}" y="${
+          y * scale
+        }" width="${scale}" height="${scale}" fill="${color}" />`
+    )
+    .join("")}`;
   }
 }
