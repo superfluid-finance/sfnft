@@ -43,6 +43,7 @@ export const handler = async (event: NFTRequestEvent) => {
       statusCode: 200,
       body: retStr,
       headers: {
+        "Access-Control-Allow-Origin": "*",
         "Content-Type": "image/svg+xml",
       },
     };
