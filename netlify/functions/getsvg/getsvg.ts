@@ -21,7 +21,7 @@ export const handler = async (event: NFTRequestEvent) => {
   try {
     await NFTRequestQuerySchema.validate(event.queryStringParameters);
 
-    const { token_symbol, sender, receiver, flowRate, start_date } =
+    const { token_symbol, sender, receiver, flowRate } =
       event.queryStringParameters;
 
     const prettyFlowRate = getPrettyEtherFlowRate(flowRate || "0");
@@ -31,18 +31,21 @@ export const handler = async (event: NFTRequestEvent) => {
     const senderBlockie = new Blockie(sender);
     const receiverBlockie = new Blockie(receiver);
 
+    // Removed ENS avatars for now:
+    const senderAvatarData = undefined;
+    const receiverAvatarData = undefined;
     const [
       senderName,
       receiverName,
       tokenSymbolData,
-      senderAvatarData,
-      receiverAvatarData,
+      // senderAvatarData,
+      // receiverAvatarData,
     ] = await Promise.allSettled([
       promiseWithTimeout(getENSName(sender), TIMEOUT),
       promiseWithTimeout(getENSName(receiver), TIMEOUT),
       promiseWithTimeout(fetchTokenIconData(token_symbol), TIMEOUT),
-      promiseWithTimeout(getENSAvatar(sender), TIMEOUT),
-      promiseWithTimeout(getENSAvatar(receiver), TIMEOUT),
+      // promiseWithTimeout(getENSAvatar(sender), TIMEOUT),
+      // promiseWithTimeout(getENSAvatar(receiver), TIMEOUT),
     ]).then((promiseResults) =>
       promiseResults.map((promiseResult) => {
         if (promiseResult.status === "fulfilled") {
