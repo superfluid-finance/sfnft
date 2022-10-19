@@ -64,19 +64,19 @@ export const handler = async (event: NFTRequestEvent) => {
         }`,
         description: `This NFT represents a ${
           streamUrl ? `[Superfluid Stream](${streamUrl})` : "Superfluid Stream"
-        }.${"  "}
+        }.${" "}
 Manage your streams at ${
           streamUrl
             ? `[app.superfluid.finance](${streamUrl})`
             : "app.superfluid.finance"
-        }.${"  "}
+        }.${" "}
 
-**Sender:** ${getAddress(sender)}${"  "}
-**Receiver:** ${getAddress(receiver)}${"  "}
+**Sender:** ${getAddress(sender)}${" "}
+**Receiver:** ${getAddress(receiver)}${" "}
 **Amount:** ${prettyFlowRate.amountEther} per ${
           timeUnitWordMap[prettyFlowRate.unitOfTime]
-        }${"  "}
-**Token:** ${token_symbol}${"  "}
+        }${" "}
+**Token:** ${token_symbol}${" "}
 **Network:** ${NetworkNames[chain_id]}
 `,
         external_url: streamUrl,
