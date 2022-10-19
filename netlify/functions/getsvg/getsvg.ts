@@ -57,14 +57,6 @@ export const handler = async (event: NFTRequestEvent) => {
       })
     );
 
-    console.log(
-      senderName,
-      receiverName,
-      !!tokenSymbolData,
-      !!senderAvatarData,
-      !!receiverAvatarData
-    );
-
     const svgString = `
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="700px" height="700px" viewBox="0 0 350 350" fill="none">
         <style>
