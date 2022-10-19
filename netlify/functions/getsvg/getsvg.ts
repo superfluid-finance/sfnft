@@ -106,9 +106,9 @@ export const handler = async (event: NFTRequestEvent) => {
             <text fill="#12141E" fill-opacity="0.87" xml:space="preserve" style="white-space: pre" font-family="GT Walsheim Pro" font-weight="500" font-size="9.46241" letter-spacing="0.0887101px">
                 <tspan x="22.9448" y="192.318">Sender</tspan>
             </text>
-            <g filter="url(#filter0_d_2168_254947)">
+            <g>
+                <rect x="22.9448" y="202.133" width="125.529" height="41.4246" rx="8.87101" fill="white" filter="url(#filter0_d_2168_254947)"/>
                 <g clip-path="url(#clip2_2168_254947)">
-                    <rect x="22.9448" y="202.133" width="125.529" height="41.4246" rx="8.87101" fill="white"/>
                     ${
                       senderName
                         ? `<text fill="#12141E" fill-opacity="0.87" xml:space="preserve" style="white-space: pre" font-family="GT Walsheim Pro" font-size="10.6452" letter-spacing="0px"><tspan x="68.4828" y="219.716">${senderName}</tspan></text>`
@@ -135,9 +135,9 @@ export const handler = async (event: NFTRequestEvent) => {
             <text fill="#12141E" fill-opacity="0.87" xml:space="preserve" style="white-space: pre" font-family="GT Walsheim Pro" font-size="9.46241" letter-spacing="0.0887101px">
                 <tspan x="201.526" y="192.318">Receiver</tspan>
             </text>
-            <g filter="url(#filter1_d_2168_254947)">
+            <g>
+                <rect x="201.526" y="202.133" width="125.529" height="41.4246" rx="8.87101" fill="white" filter="url(#filter1_d_2168_254947)"/>
                 <g clip-path="url(#clip3_2168_254947)">
-                    <rect x="201.526" y="202.133" width="125.529" height="41.4246" rx="8.87101" fill="white"/>
                     ${
                       receiverName
                         ? `<text fill="#12141E" fill-opacity="0.87" xml:space="preserve" style="white-space: pre" font-family="GT Walsheim Pro" font-size="10.6452" letter-spacing="0px"><tspan x="247.064" y="219.716">${receiverName}</tspan></text>`
