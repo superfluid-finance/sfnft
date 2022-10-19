@@ -59,6 +59,8 @@ export const handler = async (event: NFTRequestEvent) => {
 
     const svgString = `
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="700px" height="700px" viewBox="0 0 350 350" fill="none">
+        <text id="id-of-text-el"></text>
+        <script>document.getElementById("id-of-text-el").textContent = Date.now();</script>
         <style>
             @font-face {
                 font-family: "GT Walsheim Pro";
