@@ -98,9 +98,7 @@ export const handler = async (event: NFTRequestEvent) => {
                     <animateTransform attributeName="transform" attributeType="XML" dur="5s" keyTimes="0;1" repeatCount="indefinite" type="rotate" values="0;360" calcMode="linear"/>
                 </g>
 
-                <svg x="3" y="3" width="20" height="20" viewBox="0 0 24 24" clip-path="url(#token-clip)">
-                    <image width="24" height="24" xlink:href="${tokenSymbolData}" />
-                </svg>
+                <image x="3" y="3" width="20px" height="20px" xlink:href="${tokenSymbolData}" clip-path="url(#token-clip)" />
             </g>
 
             <text fill="#12141E" fill-opacity="0.87" xml:space="preserve" style="white-space: pre" font-family="GT Walsheim Pro" font-weight="500" font-size="9.46241" letter-spacing="0.0887101px">
@@ -168,8 +166,8 @@ export const handler = async (event: NFTRequestEvent) => {
             <clipPath id="avatar-clip">
                 <rect x="0" y="0" width="24" height="24" rx="5"/>
             </clipPath>
-            <clipPath id="token-clip">
-                <ellipse cx="12" cy="12" rx="12" />
+            <clipPath id="token-clip" >
+                <rect x="3" y="3" width="20" height="20" rx="10"/>
             </clipPath>
             <filter id="filter0_d_2168_254947" x="17.6222" y="196.81" width="136.174" height="52.07" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
                 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
