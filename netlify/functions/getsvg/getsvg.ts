@@ -43,8 +43,8 @@ export const handler = async (event: NFTRequestEvent) => {
       // senderAvatarData,
       // receiverAvatarData,
     ] = await Promise.allSettled([
-      promiseWithTimeout(getENSName(sender), TIMEOUT),
-      promiseWithTimeout(getENSName(receiver), TIMEOUT),
+      // promiseWithTimeout(getENSName(sender), TIMEOUT),
+      // promiseWithTimeout(getENSName(receiver), TIMEOUT),
       promiseWithTimeout(fetchTokenIconData(token_symbol), TIMEOUT),
       // promiseWithTimeout(getENSAvatar(sender), TIMEOUT),
       // promiseWithTimeout(getENSAvatar(receiver), TIMEOUT),
