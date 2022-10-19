@@ -32,11 +32,13 @@ export const handler = async (event: NFTRequestEvent) => {
     const receiverBlockie = new Blockie(receiver);
 
     // Removed ENS avatars for now:
+    const senderName = undefined;
+    const receiverName = undefined;
     const senderAvatarData = undefined;
     const receiverAvatarData = undefined;
     const [
-      senderName,
-      receiverName,
+      // senderName,
+      // receiverName,
       tokenSymbolData,
       // senderAvatarData,
       // receiverAvatarData,
