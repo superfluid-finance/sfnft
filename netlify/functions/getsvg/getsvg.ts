@@ -66,7 +66,7 @@ export const handler = async (event: NFTRequestEvent) => {
     );
 
     const svgString = `
-    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="350px" height="350px" viewBox="0 0 350 350" fill="none">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="700px" height="700px" viewBox="0 0 350 350" fill="none">
         <style>
             @font-face {
                 font-family: "GT Walsheim Pro";
