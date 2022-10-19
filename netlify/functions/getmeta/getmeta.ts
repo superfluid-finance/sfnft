@@ -59,9 +59,9 @@ export const handler = async (event: NFTRequestEvent) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: `Superfluid Stream - ${prettyFlowRate.amountEther} per ${
-          timeUnitWordMap[prettyFlowRate.unitOfTime]
-        }`,
+        name: `Superfluid Stream - ${
+          prettyFlowRate.amountEther
+        } ${token_symbol} per ${timeUnitWordMap[prettyFlowRate.unitOfTime]}`,
         description: `This NFT represents a ${
           streamUrl ? `[Superfluid Stream](${streamUrl})` : "Superfluid Stream"
         }.${" "}
