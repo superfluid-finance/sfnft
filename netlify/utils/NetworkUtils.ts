@@ -1,3 +1,13 @@
+import {
+  ARBITRUM_ICON,
+  AVALANCHE_ICON,
+  BNB_ICON,
+  getTestNetworkIcon,
+  GNOSIS_ICON,
+  OPTIMISM_ICON,
+  POLYGON_ICON,
+} from "../assets/NetworkIcons";
+
 export const NetworkSlugs = {
   5: "goerli",
   100: "gnosis",
@@ -20,4 +30,16 @@ export const NetworkNames = {
   42161: "Arbitrum One",
   43114: "Avalanche C",
   56: "BNB Smart Chain",
+};
+
+export const NetworkIcons = {
+  5: getTestNetworkIcon("G", "#9064ff"),
+  100: GNOSIS_ICON,
+  137: POLYGON_ICON,
+  80001: getTestNetworkIcon("P", "#3099f2"),
+  43113: getTestNetworkIcon("F", "#2b374b"),
+  10: OPTIMISM_ICON,
+  42161: ARBITRUM_ICON,
+  43114: AVALANCHE_ICON,
+  56: BNB_ICON,
 };

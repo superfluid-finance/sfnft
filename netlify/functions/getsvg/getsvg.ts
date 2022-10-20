@@ -5,6 +5,7 @@ import {
   getENSName,
   promiseWithTimeout,
 } from "../../utils/ENSUtils";
+import { NetworkIcons } from "../../utils/NetworkUtils";
 import { shortenHex } from "../../utils/StringUtils";
 import {
   fetchTokenIconData,
@@ -21,7 +22,7 @@ export const handler = async (event: NFTRequestEvent) => {
   try {
     await NFTRequestQuerySchema.validate(event.queryStringParameters);
 
-    const { token_symbol, sender, receiver, flowRate } =
+    const { token_symbol, sender, receiver, flowRate, chain_id } =
       event.queryStringParameters;
 
     const prettyFlowRate = getPrettyEtherFlowRate(flowRate || "0");
@@ -78,13 +79,17 @@ export const handler = async (event: NFTRequestEvent) => {
             <text x="50%" y="105.375" fill="black" xml:space="preserve" style="white-space: pre" font-family="GT Walsheim Pro" font-size="60" letter-spacing="-0.595238px" text-anchor="middle">${
               prettyFlowRate.amountEther
             }</text>
-
-            <g transform="translate(80, 120)">
-                <text x="30" y="20" fill="#10BB35" xml:space="preserve" style="white-space: pre" font-family="GT Walsheim Pro" font-size="17.4105" letter-spacing="0px" >${token_symbol} per ${
+            <text x="50%" y="140" fill="#10BB35" xml:space="preserve" style="white-space: pre" font-family="GT Walsheim Pro" font-size="17.4105" letter-spacing="0px" text-anchor="middle">${token_symbol} per ${
       timeUnitWordMap[prettyFlowRate.unitOfTime]
     }</text>
-                <g style="transform-origin: 13px 13px">
-                    <svg width="26" height="26" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+            <g transform="translate(12, 12)" clip-path="url(#network-clip)">${
+              NetworkIcons[chain_id]
+            }</g>
+
+            <g transform="translate(310, 12)">
+                <g style="transform-origin: 14px 14px">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="14" cy="14" r="13" fill="none" stroke-width="1.5" stroke="#10BB35" mask="url(#cut)" />
                         <defs>
                             <mask id="cut">
@@ -98,7 +103,7 @@ export const handler = async (event: NFTRequestEvent) => {
                     <animateTransform attributeName="transform" attributeType="XML" dur="5s" keyTimes="0;1" repeatCount="indefinite" type="rotate" values="0;360" calcMode="linear"/>
                 </g>
 
-                <image x="3" y="3" width="20px" height="20px" xlink:href="${tokenSymbolData}" clip-path="url(#token-clip)" />
+                <image x="3" y="3" width="22px" height="22px" xlink:href="${tokenSymbolData}" clip-path="url(#token-clip)" />
             </g>
 
             <text fill="#12141E" fill-opacity="0.87" xml:space="preserve" style="white-space: pre" font-family="GT Walsheim Pro" font-weight="500" font-size="9.46241" letter-spacing="0.0887101px">
@@ -178,7 +183,10 @@ export const handler = async (event: NFTRequestEvent) => {
                 <rect x="0" y="0" width="24" height="24" rx="5"/>
             </clipPath>
             <clipPath id="token-clip" >
-                <rect x="3" y="3" width="20" height="20" rx="10"/>
+                <rect x="3" y="3" width="22" height="22" rx="11"/>
+            </clipPath>
+            <clipPath id="network-clip" >
+                <rect x="0" y="0" width="26" height="26" rx="13"/>
             </clipPath>
             <filter id="filter0_d_2168_254947" x="17.6222" y="196.81" width="136.174" height="52.07" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
                 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
