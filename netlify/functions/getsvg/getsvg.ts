@@ -1,5 +1,6 @@
 import { BigNumber } from "ethers";
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
+import chromium from "chrome-aws-lambda";
 import { ValidationError } from "yup";
 import { getNFTSVG } from "../../assets/NFTSvg";
 import Blockie from "../../utils/Blockie";
@@ -66,7 +67,11 @@ export const handler = async (event: NFTRequestEvent) => {
 
     // Using puppeteer to render SVG and fetch token icon + token symbol + time unit combo width.
     // This is used to center this block horizontally which was not possible in SVG.
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      args: chromium.args,
+      executablePath: await chromium.executablePath,
+      headless: true,
+    });
     const page = await browser.newPage();
     await page.setContent(
       getNFTSVG({
