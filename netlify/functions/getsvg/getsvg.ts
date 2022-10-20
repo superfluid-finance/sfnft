@@ -1,5 +1,3 @@
-import { BigNumber } from "ethers";
-import puppeteer from "puppeteer-core";
 import chromium from "chrome-aws-lambda";
 import { ValidationError } from "yup";
 import { getNFTSVG } from "../../assets/NFTSvg";
@@ -10,7 +8,6 @@ import {
   fetchTokenIconData,
   getMonthlyEtherValue,
   getPrettyEtherFlowRate,
-  getPrettyEtherValue,
 } from "../../utils/TokenUtils";
 import { NFTRequestQuerySchema } from "../../utils/ValidationUtils";
 import { NFTRequestEvent } from "../getmeta/getmeta";
@@ -19,6 +16,8 @@ const TIMEOUT = 9000;
 
 // Docs on event and context https://docs.netlify.com/functions/build/#code-your-function-2
 export const handler = async (event: NFTRequestEvent) => {
+  let browser;
+
   try {
     await NFTRequestQuerySchema.validate(event.queryStringParameters);
 
@@ -67,11 +66,14 @@ export const handler = async (event: NFTRequestEvent) => {
 
     // Using puppeteer to render SVG and fetch token icon + token symbol + time unit combo width.
     // This is used to center this block horizontally which was not possible in SVG.
-    const browser = await puppeteer.launch({
+    browser = await chromium.puppeteer.launch({
       args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
       executablePath: await chromium.executablePath,
-      headless: true,
+      headless: chromium.headless,
+      ignoreHTTPSErrors: true,
     });
+
     const page = await browser.newPage();
     await page.setContent(
       getNFTSVG({
@@ -133,5 +135,7 @@ export const handler = async (event: NFTRequestEvent) => {
       };
     }
     return { statusCode: 500, body: error.toString() };
+  } finally {
+    if (browser) browser.close();
   }
 };
