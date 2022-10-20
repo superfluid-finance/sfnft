@@ -1,22 +1,18 @@
+import { BigNumber } from "ethers";
+import puppeteer from "puppeteer";
 import { ValidationError } from "yup";
 import { getNFTSVG } from "../../assets/NFTSvg";
 import Blockie from "../../utils/Blockie";
-import {
-  getENSAvatar,
-  getENSName,
-  promiseWithTimeout,
-} from "../../utils/ENSUtils";
+import { promiseWithTimeout } from "../../utils/ENSUtils";
 import { shortenHex } from "../../utils/StringUtils";
 import {
   fetchTokenIconData,
+  getMonthlyEtherValue,
   getPrettyEtherFlowRate,
   getPrettyEtherValue,
-  timeUnitWordMap,
 } from "../../utils/TokenUtils";
 import { NFTRequestQuerySchema } from "../../utils/ValidationUtils";
 import { NFTRequestEvent } from "../getmeta/getmeta";
-import puppeteer from "puppeteer";
-import Decimal from "decimal.js";
 
 const TIMEOUT = 9000;
 
@@ -34,9 +30,8 @@ export const handler = async (event: NFTRequestEvent) => {
     } = event.queryStringParameters;
 
     const prettyFlowRate = getPrettyEtherFlowRate(flowRate || "0");
-    const monthlyFlowRate = getPrettyEtherValue(
-      new Decimal(flowRate).mul(new Decimal(2592000)).toString()
-    );
+    const monthlyFlowRate = getMonthlyEtherValue(flowRate);
+
     const senderAbbr = shortenHex(sender);
     const receiverAbbr = shortenHex(receiver);
 

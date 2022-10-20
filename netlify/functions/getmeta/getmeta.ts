@@ -1,11 +1,8 @@
 import { Event } from "@netlify/functions/dist/function/event";
-import { NFTRequestQuerySchema } from "../../utils/ValidationUtils";
-import {
-  getPrettyEtherFlowRate,
-  timeUnitWordMap,
-} from "../../utils/TokenUtils";
 import { getAddress } from "ethers/lib/utils";
 import { networks } from "../../utils/NetworkUtils";
+import { getMonthlyEtherValue } from "../../utils/TokenUtils";
+import { NFTRequestQuerySchema } from "../../utils/ValidationUtils";
 
 export interface NFTRequestEvent extends Event {
   queryStringParameters: {
@@ -28,7 +25,7 @@ export const handler = async (event: NFTRequestEvent) => {
     const { chain_id, sender, receiver, token, flowRate, token_symbol } =
       event.queryStringParameters;
 
-    const prettyFlowRate = getPrettyEtherFlowRate(flowRate || "0");
+    const monthlyFlowRate = getMonthlyEtherValue(flowRate);
 
     // best guess for testing, should be config provided for prod
     const baseURL = `https://${event.headers.host}`;
@@ -42,9 +39,7 @@ export const handler = async (event: NFTRequestEvent) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: `Superfluid Stream - ${
-          prettyFlowRate.amountEther
-        } ${token_symbol} per ${timeUnitWordMap[prettyFlowRate.unitOfTime]}`,
+        name: `Superfluid Stream - ${monthlyFlowRate} ${token_symbol} per month`,
         description: `This NFT represents a ${
           streamUrl ? `[Superfluid Stream](${streamUrl})` : "Superfluid Stream"
         }.${"  "}
@@ -56,9 +51,7 @@ Manage your streams at ${
 
 **Sender:** ${getAddress(sender)}${"  "}
 **Receiver:** ${getAddress(receiver)}${"  "}
-**Amount:** ${prettyFlowRate.amountEther} per ${
-          timeUnitWordMap[prettyFlowRate.unitOfTime]
-        }${"  "}
+**Amount:** ${monthlyFlowRate} per month${"  "}
 **Token:** ${token_symbol}${"  "}
 **Network:** ${networks[chain_id].name}
 `,

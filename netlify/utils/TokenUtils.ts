@@ -50,6 +50,10 @@ export const getPrettyEtherValue = (weiValue: string) => {
   return etherValue.toDP(decimalsToRoundTo).toString();
 };
 
+export const getMonthlyEtherValue = (flowRate: string) =>
+  getPrettyEtherValue(
+    BigNumber.from(flowRate).mul(BigNumber.from(2592000)).toString()
+  );
 export const getPrettyEtherFlowRate = (flowRateWei: string): FlowRateEther =>
   minBy(
     (flowRateEther) => flowRateEther.amountEther.length,
