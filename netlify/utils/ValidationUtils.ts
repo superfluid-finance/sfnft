@@ -1,6 +1,6 @@
 import { isAddress } from "ethers/lib/utils";
 import { object, string } from "yup";
-import { NetworkSlugs } from "./NetworkUtils";
+import { networks } from "./NetworkUtils";
 
 const AddressTest = [
   "validate-address",
@@ -11,7 +11,7 @@ const AddressTest = [
 const ChainTest = [
   "validate-chain",
   "Not valid or supported chain",
-  (value: any) => Object.keys(NetworkSlugs).includes(value),
+  (value: any) => Object.keys(networks).includes(value),
 ] as const;
 
 export const NFTRequestQuerySchema = object().shape({

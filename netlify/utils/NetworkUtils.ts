@@ -8,38 +8,66 @@ import {
   POLYGON_ICON,
 } from "../assets/NetworkIcons";
 
-export const NetworkSlugs = {
-  5: "goerli",
-  100: "gnosis",
-  137: "polygon",
-  80001: "polygon-mumbai",
-  43113: "avalanche-fuji",
-  10: "optimism",
-  42161: "arbitrum-one",
-  43114: "avalanche",
-  56: "bsc",
-};
+interface Network {
+  slug: string;
+  name: string;
+  color: string;
+  icon: string;
+}
 
-export const NetworkNames = {
-  5: "Goerli",
-  100: "Gnosis Chain",
-  137: "Polygon",
-  80001: "Polygon Mumbai",
-  43113: "Fuji (C-Chain)",
-  10: "Optimism",
-  42161: "Arbitrum One",
-  43114: "Avalanche C",
-  56: "BNB Smart Chain",
-};
-
-export const NetworkIcons = {
-  5: getTestNetworkIcon("G", "#9064ff"),
-  100: GNOSIS_ICON,
-  137: POLYGON_ICON,
-  80001: getTestNetworkIcon("P", "#3099f2"),
-  43113: getTestNetworkIcon("F", "#2b374b"),
-  10: OPTIMISM_ICON,
-  42161: ARBITRUM_ICON,
-  43114: AVALANCHE_ICON,
-  56: BNB_ICON,
+export const networks: { [any: number]: Network } = {
+  5: {
+    slug: "goerli",
+    name: "Goerli",
+    icon: getTestNetworkIcon("G", "#9064ff"),
+    color: "#9064ff",
+  },
+  100: {
+    slug: "gnosis",
+    name: "Gnosis Chain",
+    icon: GNOSIS_ICON,
+    color: "#04795b",
+  },
+  137: {
+    slug: "polygon",
+    name: "Polygon",
+    icon: POLYGON_ICON,
+    color: "#7c3fe4",
+  },
+  80001: {
+    slug: "polygon-mumbai",
+    name: "Polygon Mumbai",
+    icon: getTestNetworkIcon("P", "#3099f2"),
+    color: "#3099f2",
+  },
+  43113: {
+    slug: "avalanche-fuji",
+    name: "Fuji (C-Chain)",
+    icon: getTestNetworkIcon("F", "#2b374b"),
+    color: "#2b374b",
+  },
+  10: {
+    slug: "optimism",
+    name: "Optimism",
+    icon: OPTIMISM_ICON,
+    color: "#ff0320",
+  },
+  42161: {
+    slug: "arbitrum-one",
+    name: "Arbitrum One",
+    icon: ARBITRUM_ICON,
+    color: "#2b374b",
+  },
+  43114: {
+    slug: "avalanche",
+    name: "Avalanche C",
+    icon: AVALANCHE_ICON,
+    color: "#e84142",
+  },
+  56: {
+    slug: "bsc",
+    name: "BNB Smart Chain",
+    icon: BNB_ICON,
+    color: "#F0B90B",
+  },
 };
