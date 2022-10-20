@@ -74,27 +74,27 @@ export const handler = async (event: NFTRequestEvent) => {
       ignoreHTTPSErrors: true,
     });
 
-    const page = await browser.newPage();
-    await page.setContent(
-      getNFTSVG({
-        prettyFlowRate,
-        monthlyFlowRate,
-        chainId,
-        tokenSymbol,
-        tokenSymbolData,
-        senderName,
-        senderAvatarData,
-        senderBlockie,
-        senderAbbr,
-        receiverName,
-        receiverAvatarData,
-        receiverBlockie,
-        receiverAbbr,
-      })
-    );
-    const element = await page.$("#token-symbol-combo");
-    const boundingBox = await element?.boundingBox();
-
+    // const page = await browser.newPage();
+    // await page.setContent(
+    //   getNFTSVG({
+    //     prettyFlowRate,
+    //     monthlyFlowRate,
+    //     chainId,
+    //     tokenSymbol,
+    //     tokenSymbolData,
+    //     senderName,
+    //     senderAvatarData,
+    //     senderBlockie,
+    //     senderAbbr,
+    //     receiverName,
+    //     receiverAvatarData,
+    //     receiverBlockie,
+    //     receiverAbbr,
+    //   })
+    // );
+    // const element = await page.$("#token-symbol-combo");
+    // const boundingBox = await element?.boundingBox();
+    const boundingBox = { width: 30 };
     const svgString = getNFTSVG({
       prettyFlowRate,
       monthlyFlowRate,
