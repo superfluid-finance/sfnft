@@ -1,3 +1,6 @@
+[functions]
+  external_node_modules = ["chrome-aws-lambda"]
+
 [[headers]]
   for = "/*"
     [headers.values]
