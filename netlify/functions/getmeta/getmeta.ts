@@ -1,4 +1,3 @@
-import { NetworkNames, NetworkSlugs } from "../../utils/NetworkUtils";
 import { Event } from "@netlify/functions/dist/function/event";
 import { NFTRequestQuerySchema } from "../../utils/ValidationUtils";
 import {
@@ -6,6 +5,7 @@ import {
   timeUnitWordMap,
 } from "../../utils/TokenUtils";
 import { getAddress } from "ethers/lib/utils";
+import { networks } from "../../utils/NetworkUtils";
 
 export interface NFTRequestEvent extends Event {
   queryStringParameters: {
@@ -33,7 +33,7 @@ export const handler = async (event: NFTRequestEvent) => {
     // best guess for testing, should be config provided for prod
     const baseURL = `https://${event.headers.host}`;
     const imageUrl = `${baseURL}/cfa/v1/getsvg?${event.rawQuery}`;
-    const streamUrl = `https://app.superfluid.finance/stream/${NetworkSlugs[chain_id]}/${sender}-${receiver}-${token}`;
+    const streamUrl = `https://app.superfluid.finance/stream/${networks[chain_id].slug}/${sender}-${receiver}-${token}`;
 
     return {
       statusCode: 200,
@@ -60,7 +60,7 @@ Manage your streams at ${
           timeUnitWordMap[prettyFlowRate.unitOfTime]
         }${"  "}
 **Token:** ${token_symbol}${"  "}
-**Network:** ${NetworkNames[chain_id]}
+**Network:** ${networks[chain_id].name}
 `,
         external_url: streamUrl,
         image: imageUrl,

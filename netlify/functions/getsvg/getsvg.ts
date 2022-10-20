@@ -10,11 +10,13 @@ import { shortenHex } from "../../utils/StringUtils";
 import {
   fetchTokenIconData,
   getPrettyEtherFlowRate,
+  getPrettyEtherValue,
   timeUnitWordMap,
 } from "../../utils/TokenUtils";
 import { NFTRequestQuerySchema } from "../../utils/ValidationUtils";
 import { NFTRequestEvent } from "../getmeta/getmeta";
 import puppeteer from "puppeteer";
+import Decimal from "decimal.js";
 
 const TIMEOUT = 9000;
 
@@ -32,6 +34,9 @@ export const handler = async (event: NFTRequestEvent) => {
     } = event.queryStringParameters;
 
     const prettyFlowRate = getPrettyEtherFlowRate(flowRate || "0");
+    const monthlyFlowRate = getPrettyEtherValue(
+      new Decimal(flowRate).mul(new Decimal(2592000)).toString()
+    );
     const senderAbbr = shortenHex(sender);
     const receiverAbbr = shortenHex(receiver);
 
@@ -71,6 +76,7 @@ export const handler = async (event: NFTRequestEvent) => {
     await page.setContent(
       getNFTSVG({
         prettyFlowRate,
+        monthlyFlowRate,
         chainId,
         tokenSymbol,
         tokenSymbolData,
@@ -89,6 +95,7 @@ export const handler = async (event: NFTRequestEvent) => {
 
     const svgString = getNFTSVG({
       prettyFlowRate,
+      monthlyFlowRate,
       chainId,
       tokenSymbol,
       tokenSymbolData,
