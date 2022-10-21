@@ -1,9 +1,8 @@
-import chromium from "chrome-aws-lambda";
 import { ValidationError } from "yup";
 import { getNFTSVG } from "../../assets/NFTSvg";
 import Blockie from "../../utils/Blockie";
 import { promiseWithTimeout } from "../../utils/ENSUtils";
-import { shortenHex } from "../../utils/StringUtils";
+import { getTokenSymbolBlockX, shortenHex } from "../../utils/StringUtils";
 import {
   fetchTokenIconData,
   getMonthlyEtherValue,
@@ -16,8 +15,6 @@ const TIMEOUT = 9000;
 
 // Docs on event and context https://docs.netlify.com/functions/build/#code-your-function-2
 export const handler = async (event: NFTRequestEvent) => {
-  let browser;
-
   try {
     await NFTRequestQuerySchema.validate(event.queryStringParameters);
 
@@ -66,35 +63,7 @@ export const handler = async (event: NFTRequestEvent) => {
 
     // Using puppeteer to render SVG and fetch token icon + token symbol + time unit combo width.
     // This is used to center this block horizontally which was not possible in SVG.
-    browser = await chromium.puppeteer.launch({
-      args: chromium.args,
-      defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath,
-      headless: chromium.headless,
-      ignoreHTTPSErrors: true,
-    });
 
-    // const page = await browser.newPage();
-    // await page.setContent(
-    //   getNFTSVG({
-    //     prettyFlowRate,
-    //     monthlyFlowRate,
-    //     chainId,
-    //     tokenSymbol,
-    //     tokenSymbolData,
-    //     senderName,
-    //     senderAvatarData,
-    //     senderBlockie,
-    //     senderAbbr,
-    //     receiverName,
-    //     receiverAvatarData,
-    //     receiverBlockie,
-    //     receiverAbbr,
-    //   })
-    // );
-    // const element = await page.$("#token-symbol-combo");
-    // const boundingBox = await element?.boundingBox();
-    const boundingBox = { width: 30 };
     const svgString = getNFTSVG({
       prettyFlowRate,
       monthlyFlowRate,
@@ -109,10 +78,7 @@ export const handler = async (event: NFTRequestEvent) => {
       receiverAvatarData,
       receiverBlockie,
       receiverAbbr,
-
-      transformIconSymbolX: boundingBox
-        ? Math.floor((700 - boundingBox.width) / 4)
-        : 80, // 700 because svg width is 700px but viewbox 350. That's why we divide everything with 4 instead of 2.
+      transformIconSymbolX: getTokenSymbolBlockX(tokenSymbol),
     });
 
     return {
@@ -135,7 +101,5 @@ export const handler = async (event: NFTRequestEvent) => {
       };
     }
     return { statusCode: 500, body: error.toString() };
-  } finally {
-    if (browser) browser.close();
   }
 };

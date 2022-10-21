@@ -36,7 +36,7 @@ export const getNFTSVG = ({
             </g>
             <text x="50%" y="105.375" fill="black" xml:space="preserve" style="white-space: pre" font-family="GT Walsheim Pro" font-size="60" letter-spacing="-0.595238px" text-anchor="middle">${monthlyFlowRate}</text>
 
-            <g id="token-symbol-combo" transform="translate(${transformIconSymbolX}, 124)">
+            <g transform="translate(${transformIconSymbolX}, 124)">
                 <text x="32" y="19" fill="#10BB35" xml:space="preserve" style="white-space: pre" font-family="GT Walsheim Pro" font-size="17.4105" letter-spacing="0px">${tokenSymbol} per month</text>
 
                 <g style="transform-origin: 13px 13px">
