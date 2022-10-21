@@ -15,7 +15,7 @@ const ChainTest = [
 ] as const;
 
 export const NFTRequestQuerySchema = object().shape({
-  token: string()
+  token_address: string()
     .test(...AddressTest)
     .required(),
   sender: string()
