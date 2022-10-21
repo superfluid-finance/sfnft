@@ -7,7 +7,7 @@ import { NFTRequestQuerySchema } from "../../utils/ValidationUtils";
 export interface NFTRequestEvent extends Event {
   queryStringParameters: {
     chain_id: string;
-    token: string;
+    token_address: string;
     token_symbol: string;
     sender: string;
     receiver: string;
