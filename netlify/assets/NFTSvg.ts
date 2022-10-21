@@ -57,12 +57,15 @@ export const getNFTSVG = ({
                 <image x="3" y="3" width="20px" height="20px" xlink:href="${tokenSymbolData}" clip-path="url(#token-clip)" />
             </g>
 
-            <svg x="300" y="0" width="24" height="24" viewBox="0 0 24 24">
-                <path d="M0 0 H 24 V 16 Q 24 24 16 24 H 8 Q 0 24 0 16 Z" fill="${
-                  networks[chainId].color
-                }" />
-                <g transform="translate(3, 3)">${networks[chainId].icon}</g>
-            </svg>
+            <g transform="translate(300, 0)" filter="url(#badge_filter)">
+
+                <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M0 0 H 24 V 16 Q 24 24 16 24 H 8 Q 0 24 0 16 Z" fill="${
+                      networks[chainId].color
+                    }" />
+                    <g transform="translate(3, 3)">${networks[chainId].icon}</g>
+                </svg>
+            </g>
 
 
             <text fill="#12141E" fill-opacity="0.87" xml:space="preserve" style="white-space: pre" font-family="GT Walsheim Pro" font-weight="500" font-size="9.46241" letter-spacing="0.0887101px">
@@ -184,6 +187,16 @@ export const getNFTSVG = ({
             <clipPath id="clip3_2168_254947">
                 <rect x="201.526" y="202.133" width="125.529" height="41.4246" rx="8.87101" fill="white"/>
             </clipPath>
+            <filter id="badge_filter" x="-3" y="0" width="30" height="30" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                <feOffset dy="2"/>
+                <feGaussianBlur stdDeviation="1.5"/>
+                <feComposite in2="hardAlpha" operator="out"/>
+                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_52_207187"/>
+                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_52_207187" result="shape"/>
+            </filter>
         </defs>
     </svg>
     `;
