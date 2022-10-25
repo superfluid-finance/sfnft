@@ -105,6 +105,8 @@ export const fetchTokenData = async (token: string, chainId: string) =>
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Origin: "https://app.superfluid.finance",
+        Referer: "localhost",
       },
       body: JSON.stringify({
         operationName: "TokenQuery",
