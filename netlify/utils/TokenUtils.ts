@@ -17,9 +17,15 @@ export interface FlowRateEther {
   unitOfTime: UnitOfTime;
 }
 
-export interface TokenResponse {
+export interface TokenData {
   id: string;
   isListed: boolean;
+}
+
+interface TokenResponse {
+  data: {
+    token: TokenData;
+  };
 }
 
 interface TokenManifest {
@@ -120,4 +126,6 @@ export const fetchTokenData = async (token: string, chainId: string) =>
       }`,
       }),
     }
-  ).then((res) => res.json()) as Promise<TokenResponse | undefined>;
+  )
+    .then((res) => res.json())
+    .then((res) => (res as TokenResponse).data.token);

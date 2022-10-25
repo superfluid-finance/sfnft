@@ -1,7 +1,11 @@
 import { Event } from "@netlify/functions/dist/function/event";
 import { getAddress } from "ethers/lib/utils";
 import { networks } from "../../utils/NetworkUtils";
-import { fetchTokenData, getMonthlyEtherValue } from "../../utils/TokenUtils";
+import {
+  fetchTokenData,
+  getMonthlyEtherValue,
+  TokenData,
+} from "../../utils/TokenUtils";
 import { NFTRequestQuerySchema } from "../../utils/ValidationUtils";
 
 export interface NFTRequestEvent extends Event {
@@ -34,8 +38,8 @@ export const handler = async (event: NFTRequestEvent) => {
     } = event.queryStringParameters;
 
     const tokenAddr = (token_address || token) as string;
-    const tokenData = await fetchTokenData(tokenAddr, chain_id);
-    const isListed = tokenData && tokenData.isListed;
+    const tokenData = await fetchTokenData(tokenAddr.toLowerCase(), chain_id);
+    const isListed = (tokenData as TokenData)?.isListed;
     const monthlyFlowRate = getMonthlyEtherValue(flowRate);
 
     // best guess for testing, should be config provided for prod

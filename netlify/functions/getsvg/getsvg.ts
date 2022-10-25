@@ -8,7 +8,7 @@ import {
   fetchTokenIconData,
   getMonthlyEtherValue,
   getPrettyEtherFlowRate,
-  TokenResponse,
+  TokenData,
 } from "../../utils/TokenUtils";
 import { NFTRequestQuerySchema } from "../../utils/ValidationUtils";
 import { NFTRequestEvent } from "../getmeta/getmeta";
@@ -60,7 +60,10 @@ export const handler = async (event: NFTRequestEvent) => {
       // promiseWithTimeout(getENSName(sender), TIMEOUT),
       // promiseWithTimeout(getENSName(receiver), TIMEOUT),
       promiseWithTimeout(fetchTokenIconData(tokenSymbol), TIMEOUT),
-      promiseWithTimeout(fetchTokenData(tokenAddr, chainId), TIMEOUT),
+      promiseWithTimeout(
+        fetchTokenData(tokenAddr.toLowerCase(), chainId),
+        TIMEOUT
+      ),
       // promiseWithTimeout(getENSAvatar(sender), TIMEOUT),
       // promiseWithTimeout(getENSAvatar(receiver), TIMEOUT),
     ]).then((promiseResults) =>
@@ -69,7 +72,7 @@ export const handler = async (event: NFTRequestEvent) => {
       )
     );
 
-    const isListed = (tokenData as TokenResponse)?.isListed;
+    const isListed = (tokenData as TokenData)?.isListed;
 
     // Using puppeteer to render SVG and fetch token icon + token symbol + time unit combo width.
     // This is used to center this block horizontally which was not possible in SVG.
