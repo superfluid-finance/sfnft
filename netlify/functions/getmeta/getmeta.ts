@@ -56,7 +56,7 @@ export const handler = async (event: NFTRequestEvent) => {
       body: JSON.stringify({
         name: `Superfluid Stream - ${monthlyFlowRate} ${token_symbol} per month`,
         description: `${
-          !isListed ? "**⚠️ Unlisted token, use with caution!**  \n" : ""
+          !isListed ? "**⚠️ Unlisted token, use with caution!**  \n\n" : ""
         }This NFT represents a ${
           streamUrl ? `[Superfluid Stream](${streamUrl})` : "Superfluid Stream"
         }.${"  "}
