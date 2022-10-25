@@ -62,11 +62,7 @@ export const handler = async (event: NFTRequestEvent) => {
       { trait_type: "Token Symbol", value: token_symbol },
       { trait_type: "Listed", value: isListed },
       { trait_type: "Flow Rate", value: fixedFlowRate },
-      {
-        trait_type: "Monthly Flow Rate",
-        value: Number(monthlyFlowRate),
-        display_type: "number",
-      },
+      { trait_type: "Monthly Flow Rate", value: monthlyFlowRate },
       ...(startDateTrait
         ? [{ trait_type: "Start Date", value: startDateTrait }]
         : []),
