@@ -1,5 +1,8 @@
 import { Event } from "@netlify/functions/dist/function/event";
+import { format } from "date-fns";
+import { BigNumber } from "ethers";
 import { getAddress } from "ethers/lib/utils";
+import { formatTraitDate } from "../../utils/DateUtils";
 import { networks } from "../../utils/NetworkUtils";
 import {
   fetchTokenData,
@@ -50,6 +53,25 @@ export const handler = async (event: NFTRequestEvent) => {
     const imageUrl = `${baseURL}/cfa/v1/getsvg?${event.rawQuery}`;
     const streamUrl = `https://app.superfluid.finance/stream/${networks[chain_id].slug}/${sender}-${receiver}-${tokenAddr}`;
 
+    const startDateTrait = formatTraitDate(start_date);
+
+    const attributes = [
+      { trait_type: "Sender", value: sender },
+      { trait_type: "Receiver", value: receiver },
+      { trait_type: "Token", value: tokenAddr },
+      { trait_type: "Token Symbol", value: token_symbol },
+      { trait_type: "Listed", value: isListed },
+      { trait_type: "Flow Rate", value: fixedFlowRate },
+      {
+        trait_type: "Monthly Flow Rate",
+        value: Number(monthlyFlowRate),
+        display_type: "number",
+      },
+      ...(startDateTrait
+        ? [{ trait_type: "Start Date", value: startDateTrait }]
+        : []),
+    ];
+
     return {
       statusCode: 200,
       headers: {
@@ -58,6 +80,7 @@ export const handler = async (event: NFTRequestEvent) => {
       },
       body: JSON.stringify({
         name: `Superfluid Stream - ${monthlyFlowRate} ${token_symbol} per month`,
+        attributes,
         description: `${
           !isListed ? "**⚠️ Unlisted token, use with caution!**  \n\n" : ""
         }This NFT represents a ${

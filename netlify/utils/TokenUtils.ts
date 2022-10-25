@@ -1,5 +1,5 @@
 import Decimal from "decimal.js";
-import { BigNumber } from "ethers";
+import { BigNumber, Contract } from "ethers";
 import { formatUnits } from "ethers/lib/utils";
 import minBy from "lodash/fp/minBy";
 import fetch from "node-fetch";
@@ -41,6 +41,7 @@ export enum UnitOfTime {
   Month = 2592000,
   Year = 31536000,
 }
+
 export const unitOfTimeList = [
   UnitOfTime.Second,
   UnitOfTime.Minute,
@@ -61,6 +62,7 @@ export const timeUnitWordMap: Record<UnitOfTime, string> = {
   [UnitOfTime.Year]: "year",
 };
 
+// There was a bug in the contract. This might be a temp solution until contract is fixed
 export const fixBrokenFlowrate = (flowRate: string, startDate?: string) => {
   if (startDate) return flowRate;
   return flowRate.substring(0, flowRate.length - 1);
