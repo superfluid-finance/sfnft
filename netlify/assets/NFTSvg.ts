@@ -54,12 +54,7 @@ export const getNFTSVG = ({
                             </mask>
                         </defs>
                     </svg>
-                    ${
-                      isListed
-                        ? `<animateTransform attributeName="transform" attributeType="XML" dur="5s" keyTimes="0;1" repeatCount="indefinite" type="rotate" values="0;360" calcMode="linear"/>`
-                        : ""
-                    }
-
+                    <animateTransform attributeName="transform" attributeType="XML" dur="5s" keyTimes="0;1" repeatCount="indefinite" type="rotate" values="0;360" calcMode="linear"/>
                 </g>
 
                 ${
