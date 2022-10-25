@@ -44,7 +44,7 @@ export const handler = async (event: NFTRequestEvent) => {
 
     const tokenAddr = (token_address || token) as string;
     const tokenData = await fetchTokenData(tokenAddr.toLowerCase(), chain_id);
-    const isListed = (tokenData as TokenData)?.isListed;
+    const isListed = Boolean((tokenData as TokenData)?.isListed);
     const fixedFlowRate = fixBrokenFlowrate(flowRate, start_date);
     const monthlyFlowRate = getMonthlyEtherValue(fixedFlowRate);
 
@@ -60,7 +60,7 @@ export const handler = async (event: NFTRequestEvent) => {
       { trait_type: "Receiver", value: receiver },
       { trait_type: "Token", value: tokenAddr },
       { trait_type: "Token Symbol", value: token_symbol },
-      { trait_type: "Listed", value: isListed },
+      { trait_type: "Listed", value: isListed.toString() },
       { trait_type: "Flow Rate", value: fixedFlowRate },
       { trait_type: "Monthly Flow Rate", value: monthlyFlowRate },
       ...(startDateTrait
