@@ -1,7 +1,7 @@
 import { Event } from "@netlify/functions/dist/function/event";
 import { getAddress } from "ethers/lib/utils";
 import { networks } from "../../utils/NetworkUtils";
-import { getMonthlyEtherValue } from "../../utils/TokenUtils";
+import { fetchTokenData, getMonthlyEtherValue } from "../../utils/TokenUtils";
 import { NFTRequestQuerySchema } from "../../utils/ValidationUtils";
 
 export interface NFTRequestEvent extends Event {
@@ -33,7 +33,9 @@ export const handler = async (event: NFTRequestEvent) => {
       token_symbol,
     } = event.queryStringParameters;
 
-    const tokenAddr = token_address || token;
+    const tokenAddr = (token_address || token) as string;
+    const tokenData = await fetchTokenData(tokenAddr, chain_id);
+    const isListed = tokenData && tokenData.isListed;
     const monthlyFlowRate = getMonthlyEtherValue(flowRate);
 
     // best guess for testing, should be config provided for prod
@@ -56,14 +58,12 @@ Manage your streams at ${
           streamUrl
             ? `[app.superfluid.finance](${streamUrl})`
             : "app.superfluid.finance"
-        }.${"  "}
-
+        }.${!isListed ? "  \n\n**This token is not listed!**  \n" : "  "}
 **Sender:** ${getAddress(sender)}${"  "}
 **Receiver:** ${getAddress(receiver)}${"  "}
 **Amount:** ${monthlyFlowRate} per month${"  "}
 **Token:** ${token_symbol}${"  "}
-**Network:** ${networks[chain_id].name}
-`,
+**Network:** ${networks[chain_id].name}`,
         external_url: streamUrl,
         image: imageUrl,
       }),

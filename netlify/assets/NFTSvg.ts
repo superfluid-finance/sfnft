@@ -1,5 +1,5 @@
 import { networks } from "../utils/NetworkUtils";
-import { timeUnitWordMap } from "../utils/TokenUtils";
+import { DEFAULT_TOKEN, timeUnitWordMap } from "../utils/TokenUtils";
 
 export const getNFTSVG = ({
   prettyFlowRate,
@@ -15,6 +15,7 @@ export const getNFTSVG = ({
   receiverAvatarData,
   receiverBlockie,
   receiverAbbr,
+  isListed,
   transformIconSymbolX = 40,
 }) => `
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="700px" height="700px" viewBox="0 0 350 350" fill="none">
@@ -41,7 +42,9 @@ export const getNFTSVG = ({
 
                 <g style="transform-origin: 13px 13px">
                     <svg width="26" height="26" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="14" cy="14" r="13" fill="none" stroke-width="1.5" stroke="#10BB35" mask="url(#cut)" />
+                        <circle cx="14" cy="14" r="13" fill="none" stroke-width="1.5" stroke="${
+                          isListed ? "#10BB35" : "#f3a002"
+                        }" mask="url(#cut)" />
                         <defs>
                             <mask id="cut">
                                 <circle cx="14" cy="14" r="13" stroke-width="1.5" stroke="white" />
@@ -51,10 +54,19 @@ export const getNFTSVG = ({
                             </mask>
                         </defs>
                     </svg>
-                    <animateTransform attributeName="transform" attributeType="XML" dur="5s" keyTimes="0;1" repeatCount="indefinite" type="rotate" values="0;360" calcMode="linear"/>
+                    ${
+                      isListed
+                        ? `<animateTransform attributeName="transform" attributeType="XML" dur="5s" keyTimes="0;1" repeatCount="indefinite" type="rotate" values="0;360" calcMode="linear"/>`
+                        : ""
+                    }
+
                 </g>
 
-                <image x="3" y="3" width="20px" height="20px" xlink:href="${tokenSymbolData}" clip-path="url(#token-clip)" />
+                ${
+                  isListed
+                    ? `<image x="3" y="3" width="20px" height="20px" xlink:href="${tokenSymbolData}" clip-path="url(#token-clip)" />`
+                    : `<svg x="3" y="3" width="20px" height="20px" viewBox="0 0 24 24"><path d="M11.07 12.85c.77-1.39 2.25-2.21 3.11-3.44.91-1.29.4-3.7-2.18-3.7-1.69 0-2.52 1.28-2.87 2.34L6.54 6.96C7.25 4.83 9.18 3 11.99 3c2.35 0 3.96 1.07 4.78 2.41.7 1.15 1.11 3.3.03 4.9-1.2 1.77-2.35 2.31-2.97 3.45-.25.46-.35.76-.35 2.24h-2.89c-.01-.78-.13-2.05.48-3.15zM14 20c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2z" fill="#f3a002" /></svg>`
+                }
             </g>
 
             <g transform="translate(300, 0)" filter="url(#badge_filter)">

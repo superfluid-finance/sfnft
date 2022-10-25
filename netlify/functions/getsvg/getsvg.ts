@@ -4,9 +4,11 @@ import Blockie from "../../utils/Blockie";
 import { promiseWithTimeout } from "../../utils/ENSUtils";
 import { getTokenSymbolBlockX, shortenHex } from "../../utils/StringUtils";
 import {
+  fetchTokenData,
   fetchTokenIconData,
   getMonthlyEtherValue,
   getPrettyEtherFlowRate,
+  TokenResponse,
 } from "../../utils/TokenUtils";
 import { NFTRequestQuerySchema } from "../../utils/ValidationUtils";
 import { NFTRequestEvent } from "../getmeta/getmeta";
@@ -20,11 +22,15 @@ export const handler = async (event: NFTRequestEvent) => {
 
     const {
       token_symbol: tokenSymbol,
+      token,
+      token_address,
       sender,
       receiver,
       flowRate,
       chain_id: chainId,
     } = event.queryStringParameters;
+
+    const tokenAddr = (token_address || token) as string;
 
     const prettyFlowRate = getPrettyEtherFlowRate(flowRate || "0");
     const monthlyFlowRate = getMonthlyEtherValue(flowRate);
@@ -47,12 +53,14 @@ export const handler = async (event: NFTRequestEvent) => {
       // senderName,
       // receiverName,
       tokenSymbolData,
+      tokenData,
       // senderAvatarData,
       // receiverAvatarData,
     ] = await Promise.allSettled([
       // promiseWithTimeout(getENSName(sender), TIMEOUT),
       // promiseWithTimeout(getENSName(receiver), TIMEOUT),
       promiseWithTimeout(fetchTokenIconData(tokenSymbol), TIMEOUT),
+      promiseWithTimeout(fetchTokenData(tokenAddr, chainId), TIMEOUT),
       // promiseWithTimeout(getENSAvatar(sender), TIMEOUT),
       // promiseWithTimeout(getENSAvatar(receiver), TIMEOUT),
     ]).then((promiseResults) =>
@@ -60,6 +68,8 @@ export const handler = async (event: NFTRequestEvent) => {
         promiseResult.status === "fulfilled" ? promiseResult.value : undefined
       )
     );
+
+    const isListed = (tokenData as TokenResponse)?.isListed;
 
     // Using puppeteer to render SVG and fetch token icon + token symbol + time unit combo width.
     // This is used to center this block horizontally which was not possible in SVG.
@@ -78,6 +88,7 @@ export const handler = async (event: NFTRequestEvent) => {
       receiverAvatarData,
       receiverBlockie,
       receiverAbbr,
+      isListed,
       transformIconSymbolX: getTokenSymbolBlockX(tokenSymbol),
     });
 
