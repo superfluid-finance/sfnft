@@ -7,11 +7,12 @@ import { NFTRequestQuerySchema } from "../../utils/ValidationUtils";
 export interface NFTRequestEvent extends Event {
   queryStringParameters: {
     chain_id: string;
-    token_address: string;
     token_symbol: string;
     sender: string;
     receiver: string;
     flowRate: string;
+    token_address: string | undefined;
+    token: string | undefined;
     start_date: string | undefined;
     token_decimals: string | undefined;
   };
@@ -22,15 +23,23 @@ export const handler = async (event: NFTRequestEvent) => {
   try {
     await NFTRequestQuerySchema.validate(event.queryStringParameters);
 
-    const { chain_id, sender, receiver, token_address, flowRate, token_symbol } =
-      event.queryStringParameters;
+    const {
+      chain_id,
+      sender,
+      receiver,
+      token_address,
+      token,
+      flowRate,
+      token_symbol,
+    } = event.queryStringParameters;
 
+    const tokenAddr = token_address || token;
     const monthlyFlowRate = getMonthlyEtherValue(flowRate);
 
     // best guess for testing, should be config provided for prod
     const baseURL = `https://${event.headers.host}`;
     const imageUrl = `${baseURL}/cfa/v1/getsvg?${event.rawQuery}`;
-    const streamUrl = `https://app.superfluid.finance/stream/${networks[chain_id].slug}/${sender}-${receiver}-${token_address}`;
+    const streamUrl = `https://app.superfluid.finance/stream/${networks[chain_id].slug}/${sender}-${receiver}-${tokenAddr}`;
 
     return {
       statusCode: 200,

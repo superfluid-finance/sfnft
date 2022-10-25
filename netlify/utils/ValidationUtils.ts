@@ -14,21 +14,33 @@ const ChainTest = [
   (value: any) => Object.keys(networks).includes(value),
 ] as const;
 
-export const NFTRequestQuerySchema = object().shape({
-  token_address: string()
-    .test(...AddressTest)
-    .required(),
-  sender: string()
-    .test(...AddressTest)
-    .required(),
-  receiver: string()
-    .test(...AddressTest)
-    .required(),
-  chain_id: string()
-    .test(...ChainTest)
-    .required(),
-  token_symbol: string().required(),
-  flowRate: string().required(),
-  start_date: string().optional(),
-  token_decimals: string().optional(),
-});
+export const NFTRequestQuerySchema = object().shape(
+  {
+    token_address: string().when("token", {
+      is: (token) => !token || token.length === 0,
+      then: string()
+        .required()
+        .test(...AddressTest),
+    }),
+    token: string().when("token_address", {
+      is: (token) => !token || token.length === 0,
+      then: string()
+        .required()
+        .test(...AddressTest),
+    }),
+    sender: string()
+      .test(...AddressTest)
+      .required(),
+    receiver: string()
+      .test(...AddressTest)
+      .required(),
+    chain_id: string()
+      .test(...ChainTest)
+      .required(),
+    token_symbol: string().required(),
+    flowRate: string().required(),
+    start_date: string().optional(),
+    token_decimals: string().optional(),
+  },
+  [["token_address", "token"]]
+);
