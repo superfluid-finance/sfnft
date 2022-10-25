@@ -3,6 +3,7 @@ import { getAddress } from "ethers/lib/utils";
 import { networks } from "../../utils/NetworkUtils";
 import {
   fetchTokenData,
+  fixBrokenFlowrate,
   getMonthlyEtherValue,
   TokenData,
 } from "../../utils/TokenUtils";
@@ -35,12 +36,14 @@ export const handler = async (event: NFTRequestEvent) => {
       token,
       flowRate,
       token_symbol,
+      start_date,
     } = event.queryStringParameters;
 
     const tokenAddr = (token_address || token) as string;
     const tokenData = await fetchTokenData(tokenAddr.toLowerCase(), chain_id);
     const isListed = (tokenData as TokenData)?.isListed;
-    const monthlyFlowRate = getMonthlyEtherValue(flowRate);
+    const fixedFlowRate = fixBrokenFlowrate(flowRate, start_date);
+    const monthlyFlowRate = getMonthlyEtherValue(fixedFlowRate);
 
     // best guess for testing, should be config provided for prod
     const baseURL = `https://${event.headers.host}`;

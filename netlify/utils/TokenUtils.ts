@@ -41,7 +41,6 @@ export enum UnitOfTime {
   Month = 2592000,
   Year = 31536000,
 }
-
 export const unitOfTimeList = [
   UnitOfTime.Second,
   UnitOfTime.Minute,
@@ -60,6 +59,11 @@ export const timeUnitWordMap: Record<UnitOfTime, string> = {
   [UnitOfTime.Week]: "week",
   [UnitOfTime.Month]: "month",
   [UnitOfTime.Year]: "year",
+};
+
+export const fixBrokenFlowrate = (flowRate: string, startDate?: string) => {
+  if (startDate) return flowRate;
+  return flowRate.substring(0, flowRate.length - 1);
 };
 
 export const getPrettyEtherValue = (weiValue: string) => {

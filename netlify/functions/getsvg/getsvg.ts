@@ -6,6 +6,7 @@ import { getTokenSymbolBlockX, shortenHex } from "../../utils/StringUtils";
 import {
   fetchTokenData,
   fetchTokenIconData,
+  fixBrokenFlowrate,
   getMonthlyEtherValue,
   getPrettyEtherFlowRate,
   TokenData,
@@ -28,12 +29,14 @@ export const handler = async (event: NFTRequestEvent) => {
       receiver,
       flowRate,
       chain_id: chainId,
+      start_date,
     } = event.queryStringParameters;
 
     const tokenAddr = (token_address || token) as string;
 
-    const prettyFlowRate = getPrettyEtherFlowRate(flowRate || "0");
-    const monthlyFlowRate = getMonthlyEtherValue(flowRate);
+    const fixedFlowRate = fixBrokenFlowrate(flowRate, start_date);
+    const prettyFlowRate = getPrettyEtherFlowRate(fixedFlowRate || "0");
+    const monthlyFlowRate = getMonthlyEtherValue(fixedFlowRate);
 
     const senderAbbr = shortenHex(sender);
     const receiverAbbr = shortenHex(receiver);
