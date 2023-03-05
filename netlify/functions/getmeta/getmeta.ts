@@ -98,6 +98,6 @@ Manage your streams at ${
       }),
     };
   } catch (error) {
-    return { statusCode: 500, body: error.toString() };
+    return { statusCode: 400, body: error.toString() };
   }
 };
