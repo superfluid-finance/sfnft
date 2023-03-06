@@ -117,6 +117,6 @@ export const handler = async (event: NFTRequestEvent) => {
         }),
       };
     }
-    return { statusCode: 500, body: error.toString() };
+    return { statusCode: 400, body: error.toString() };
   }
 };
