@@ -1,9 +1,0 @@
-[[headers]]
-  for = "/*"
-    [headers.values]
-      Access-Control-Allow-Origin = "*"
-
-[[redirects]]
-  from = "/cfa/v1/*"
-  to = "/.netlify/functions/:splat"
-  status = 200

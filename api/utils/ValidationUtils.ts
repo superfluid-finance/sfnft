@@ -17,13 +17,13 @@ const ChainTest = [
 export const NFTRequestQuerySchema = object().shape(
   {
     token_address: string().when("token", {
-      is: (token) => !token || token.length === 0,
+      is: (token:string) => !token || token.length === 0,
       then: string()
         .required()
         .test(...AddressTest),
     }),
     token: string().when("token_address", {
-      is: (token) => !token || token.length === 0,
+      is: (token:string) => !token || token.length === 0,
       then: string()
         .required()
         .test(...AddressTest),

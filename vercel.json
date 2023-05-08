@@ -1,0 +1,24 @@
+{
+  "functions": {
+    "api/*.ts": {
+      "runtime": "@vercel/node@2.12.0"
+    }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/cfa/v1/:splat*",
+      "destination": "/api/:splat"
+    }
+  ]
+}
