@@ -77,7 +77,7 @@ export const getPrettyEtherValue = (weiValue: string) => {
 
 export const getMonthlyEtherValue = (flowRate: string) =>
     getPrettyEtherValue(
-        BigNumber.from(flowRate).mul(BigNumber.from(2592000)).toString()
+        BigNumber.from(flowRate).mul(BigNumber.from(UnitOfTime.Month)).toString()
     );
 export const getPrettyEtherFlowRate = (flowRateWei: string): FlowRateEther =>
     minBy(
