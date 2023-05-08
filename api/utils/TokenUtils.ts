@@ -39,7 +39,7 @@ export enum UnitOfTime {
     Hour = 3600,
     Day = 86400,
     Week = 604800,
-    Month = 2592000,
+    Month = 2628000,
     Year = 31536000,
 }
 
@@ -77,7 +77,7 @@ export const getPrettyEtherValue = (weiValue: string) => {
 
 export const getMonthlyEtherValue = (flowRate: string) =>
     getPrettyEtherValue(
-        BigNumber.from(flowRate).mul(BigNumber.from(2592000)).toString()
+        BigNumber.from(flowRate).mul(BigNumber.from(UnitOfTime.Month)).toString()
     );
 export const getPrettyEtherFlowRate = (flowRateWei: string): FlowRateEther =>
     minBy(
