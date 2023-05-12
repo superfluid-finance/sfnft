@@ -1,6 +1,6 @@
 {
   "functions": {
-    "api/*.ts": {
+    "api/{v1,v2}/*.ts": {
       "runtime": "@vercel/node@2.12.0"
     }
   },
@@ -17,8 +17,8 @@
   ],
   "rewrites": [
     {
-      "source": "/cfa/v1/:splat*",
-      "destination": "/api/:splat"
+      "source": "/cfa/:version/:splat*",
+      "destination": "/api/:version/:splat"
     }
   ]
 }

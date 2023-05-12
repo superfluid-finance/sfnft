@@ -1,5 +1,5 @@
 import { isAddress } from "ethers/lib/utils";
-import { object, string } from "yup";
+import { boolean, object, string } from "yup";
 import { networks } from "./NetworkUtils";
 
 const AddressTest = [
@@ -17,13 +17,13 @@ const ChainTest = [
 export const NFTRequestQuerySchema = object().shape(
   {
     token_address: string().when("token", {
-      is: (token:string) => !token || token.length === 0,
+      is: (token: string) => !token || token.length === 0,
       then: string()
         .required()
         .test(...AddressTest),
     }),
     token: string().when("token_address", {
-      is: (token:string) => !token || token.length === 0,
+      is: (token: string) => !token || token.length === 0,
       then: string()
         .required()
         .test(...AddressTest),
@@ -41,6 +41,7 @@ export const NFTRequestQuerySchema = object().shape(
     flowRate: string().required(),
     start_date: string().optional(),
     token_decimals: string().optional(),
+    incoming: boolean().optional(),
   },
   [["token_address", "token"]]
 );

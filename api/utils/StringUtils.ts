@@ -6,18 +6,19 @@ export function shortenHex(address: string, length = 4) {
 }
 
 // Token icon + symbol + time unit block width without token symbol
-const EMPTY_BLOCK_WIDTH = 231.43;
+const EMPTY_BLOCK_WIDTH = 192.17;
 
-export const getTokenSymbolBlockX = (tokenSymbol: string) =>
-  (700 -
-    EMPTY_BLOCK_WIDTH -
-    tokenSymbol
-      .split("")
-      .reduce(
-        (totalWidth, letter) => totalWidth + (TokenSymbolLetters[letter] || 20),
-        0
-      )) /
-  4;
+// This is used to center token icon and symbol block center horizontally.
+export function getTokenSymbolBlockX(tokenSymbol: string) {
+  const tokenSymbolLength = tokenSymbol
+    .split("")
+    .reduce(
+      (totalWidth, letter) => totalWidth + (TokenSymbolLetters[letter] || 20),
+      0
+    );
+
+  return (700 - EMPTY_BLOCK_WIDTH - tokenSymbolLength) / 4;
+}
 
 // Calculated widths of all GT Walsheim Pro letters with token symbol styles.
 const TokenSymbolLetters = {
