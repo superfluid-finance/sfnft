@@ -44,7 +44,7 @@ export const handler = async (
     // best guess for testing, should be config provided for prod
     const baseURL = `https://${request.headers.host}`;
 
-    const imageUrl = `${baseURL}/cfa/v1/getsvg?${objectToQueryString(
+    const imageUrl = `${baseURL}/cfa/v2/getsvg?${objectToQueryString(
       request.query
     )}`;
 
