@@ -65,13 +65,8 @@ export const handler = async (
         JSON.stringify({
           name: `Superfluid Stream - ${monthlyFlowRate} ${token_symbol} per month`,
           attributes,
-          description: `${
-            !isListed ? "**⚠️ Unlisted token, use with caution!**  \n\n" : ""
-          }This NFT represents a ${
-            streamUrl
-              ? `[Superfluid Stream](${streamUrl})`
-              : "Superfluid Stream"
-          }.${"  "}
+          description: `**⚠️ This NFT is deprecated, please reopen stream! ⚠️**${"  "}
+          Our beta stream NFTs have been deprecated and can be burned when the stream has been stopped, new streams will create new NFTs with the updated designs and features  \n\n
 Manage your streams at ${
             streamUrl
               ? `[app.superfluid.finance](${streamUrl})`
