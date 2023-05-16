@@ -1,8 +1,5 @@
 <h1 align="center">Superfluid NFT API</h1>
 
-
-## Superfluid Dashboard v2
-
 ## Local development
 
 Install required packages:
@@ -19,29 +16,29 @@ Run project locally:
 ### V2
 
 ##### Meta
-`http://localhost:3000/cfa/v2/getmeta`
+`https://nft.superfluid.finance/cfa/v2/getmeta`
 
-example: `http://localhost:3000/cfa/v2/getmeta?chain_id=137&token_address=0xa794221d92d77490ff319e95da1461bdf2bd3953&token_symbol=TDLx&token_decimals=18&sender=0x658e1b019f2f30c8089a9ae3ae5820f335bd9ce4&receiver=0x0aff3384ef1299290a052b5b779bf6c231110841&flowRate=3805175038051&start_date=1683534760&outgoing=false`
+example: `https://nft.superfluid.finance/cfa/v2/getmeta?chain_id=137&token_address=0xa794221d92d77490ff319e95da1461bdf2bd3953&token_symbol=TDLx&token_decimals=18&sender=0x658e1b019f2f30c8089a9ae3ae5820f335bd9ce4&receiver=0x0aff3384ef1299290a052b5b779bf6c231110841&flowRate=3805175038051&start_date=1683534760&outgoing=false`
 
 ##### SVG
-`http://localhost:3000/cfa/v2/getsvg`
+`https://nft.superfluid.finance/cfa/v2/getsvg`
 
-example: `http://localhost:3000/cfa/v2/getsvg?chain_id=137&token_address=0xa794221d92d77490ff319e95da1461bdf2bd3953&token_symbol=TDLx&token_decimals=18&sender=0x658e1b019f2f30c8089a9ae3ae5820f335bd9ce4&receiver=0x0aff3384ef1299290a052b5b779bf6c231110841&flowRate=3805175038051&start_date=1683534760&outgoing=false`
+example: `https://nft.superfluid.finance/cfa/v2/getsvg?chain_id=137&token_address=0xa794221d92d77490ff319e95da1461bdf2bd3953&token_symbol=TDLx&token_decimals=18&sender=0x658e1b019f2f30c8089a9ae3ae5820f335bd9ce4&receiver=0x0aff3384ef1299290a052b5b779bf6c231110841&flowRate=3805175038051&start_date=1683534760&outgoing=false`
 
 ### V1
 
 ##### Meta
-`http://localhost:3000/cfa/v1/getmeta`
+`https://nft.superfluid.finance/cfa/v1/getmeta`
 
-example: `http://localhost:3000/cfa/v1/getmeta?chain_id=137&token_address=0xa794221d92d77490ff319e95da1461bdf2bd3953&token_symbol=TDLx&token_decimals=18&sender=0x658e1b019f2f30c8089a9ae3ae5820f335bd9ce4&receiver=0x0aff3384ef1299290a052b5b779bf6c231110841&flowRate=3805175038051&start_date=1683534760`
+example: `https://nft.superfluid.finance/cfa/v1/getmeta?chain_id=137&token_address=0xa794221d92d77490ff319e95da1461bdf2bd3953&token_symbol=TDLx&token_decimals=18&sender=0x658e1b019f2f30c8089a9ae3ae5820f335bd9ce4&receiver=0x0aff3384ef1299290a052b5b779bf6c231110841&flowRate=3805175038051&start_date=1683534760`
 
 ##### SVG
-`http://localhost:3000/cfa/v1/getsvg`
+`https://nft.superfluid.finance/cfa/v1/getsvg`
 
-example: `http://localhost:3000/cfa/v1/getsvg?chain_id=137&token_address=0xa794221d92d77490ff319e95da1461bdf2bd3953&token_symbol=TDLx&token_decimals=18&sender=0x658e1b019f2f30c8089a9ae3ae5820f335bd9ce4&receiver=0x0aff3384ef1299290a052b5b779bf6c231110841&flowRate=3805175038051&start_date=1683534760`
+example: `https://nft.superfluid.finance/cfa/v1/getsvg?chain_id=137&token_address=0xa794221d92d77490ff319e95da1461bdf2bd3953&token_symbol=TDLx&token_decimals=18&sender=0x658e1b019f2f30c8089a9ae3ae5820f335bd9ce4&receiver=0x0aff3384ef1299290a052b5b779bf6c231110841&flowRate=3805175038051&start_date=1683534760`
 
 
-### Query params:
+### Query parameters:
 
 `chain_id` - Network ID
 
