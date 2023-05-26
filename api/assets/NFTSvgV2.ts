@@ -125,7 +125,7 @@ export const getNFTSVG = ({
     </g>
     <defs>
         <clipPath id="token-clip" >
-            <rect x="3" y="3" width="20" height="20" rx="10"/>
+            <rect x="2" y="2" width="16" height="16" rx="10"/>
         </clipPath>
         <clipPath id="avatar-clip">
             <rect x="0" y="0" width="24" height="24" rx="5"/>
