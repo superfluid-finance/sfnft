@@ -53,6 +53,7 @@ Supported networks:
 42161 - Arbitrum One
 43113 - Fuji (C-Chain)
 43114 - Avalanche C
+8453 - Base
 ```
 
 `token_address` - Super token address
