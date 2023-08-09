@@ -114,9 +114,7 @@ export const fetchTokenIconData = async (symbol: string) => {
 export const fetchTokenData = async (token: string, chainId: string) =>
   axios
     .post(
-      `https://api.thegraph.com/subgraphs/name/superfluid-finance/${
-        networks[Number(chainId)].subgraphId
-      }`,
+      networks[Number(chainId)].subgraphUrl,
       {
         operationName: "TokenQuery",
         query: `query TokenQuery {

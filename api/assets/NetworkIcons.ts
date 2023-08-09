@@ -28,3 +28,5 @@ export const POLYGON_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="18px
 
 export const getTestNetworkIcon = (letter: string, color: string) =>
   `<svg width="18px" height="18px" viewBox="0 0 26 26"><circle cx="13" cy="13" r="13" fill="${color}"/><text x="50%" y="18" text-anchor="middle" fill="white" font-family="GT Walsheim Pro" font-size="14px">${letter.toUpperCase()}</text></svg>`;
+
+export const BASE_ICON = `<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M128 64C128 99.3462 99.2961 128 63.8883 128C30.2955 128 2.73697 102.208 0 69.3797H84.7409V58.6202H0C2.73697 25.7915 30.2955 0 63.8883 0C99.2961 0 128 28.6537 128 64Z" fill="#0052FF"/></svg>`
