@@ -16,3 +16,19 @@ type NFTQuery = {
 export type NFTRequest = VercelRequest & {
   query: NFTQuery;
 };
+
+type ExistentialNFTQuery = {
+  name: string;
+  description: string;
+  chain: string;
+  ipfs: string;
+  symbol: string;
+  sender: string;
+  recipient: string;
+  flowrate: string;
+  clone: string | undefined;
+} & VercelRequestQuery;
+
+export type ExistentialNFTRequest = VercelRequest & {
+  query: ExistentialNFTQuery;
+};
