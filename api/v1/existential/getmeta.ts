@@ -23,7 +23,6 @@ export const handler = async (
       sender,
       recipient,
       flowrate,
-      clone,
     } = request.query;
 
     const tokenAddr = token;
@@ -34,7 +33,7 @@ export const handler = async (
     const baseURL = `https://${request.headers.host}`;
 
     const imageUrl = `${baseURL}/existential/v1/getsvg?${objectToQueryString(
-      request.query
+      request.query as Record<string, string>
     )}`;
 
     const streamUrl = `https://app.superfluid.finance/stream/${
@@ -58,16 +57,9 @@ export const handler = async (
       .setHeader("Content-Type", "application/json")
       .send(
         JSON.stringify({
-          name: `Superfluid Stream - ${monthlyFlowRate} ${symbol} per month`,
+          name: `Streamgating NFT - ${monthlyFlowRate} ${symbol} per month`,
           attributes,
-          description: `**⚠️ This NFT is deprecated, please reopen stream! ⚠️**${"  "}
-          Our beta stream NFTs have been deprecated and can be burned when the stream has been stopped, new streams will create new NFTs with the updated designs and features  \n\n
-Manage your streams at ${
-            streamUrl
-              ? `[app.superfluid.finance](${streamUrl})`
-              : "app.superfluid.finance"
-          }.${"  "}
-
+          description: `This NFT represents a subscription to ${name} for ${monthlyFlowRate} ${symbol} per month. The subscription is managed by Superfluid and can be cancelled at any time. The subscription is paid by ${sender} and received by ${recipient}.
 **Sender:** ${getAddress(sender)}${"  "}
 **Receiver:** ${getAddress(recipient)}${"  "}
 **Amount:** ${monthlyFlowRate} per month${"  "}

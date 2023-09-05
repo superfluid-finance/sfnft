@@ -54,12 +54,7 @@ export const ExistentialNFTRequestQuerySchema = object().shape({
     .required(),
   ipfs: string().required(),
   symbol: string().required(),
-  token: string().when("token", {
-    is: (token: string) => !token || token.length === 0,
-    then: string()
-      .required()
-      .test(...AddressTest),
-  }),
+  token: string().required(),
   sender: string()
     .test(...AddressTest)
     .required(),
