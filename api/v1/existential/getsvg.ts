@@ -2,7 +2,7 @@ import { VercelResponse } from "@vercel/node";
 import { ValidationError } from "yup";
 
 import { promiseWithTimeout } from "../../utils/ENSUtils";
-import { ExistentialNFTRequest, NFTRequest } from "../../utils/RequestUtils";
+import { ExistentialNFTRequest } from "../../utils/RequestUtils";
 import { fetchTokenData, getMonthlyEtherValue } from "../../utils/TokenUtils";
 import { ExistentialNFTRequestQuerySchema } from "../../utils/ValidationUtils";
 import { getDefaultExistentialNFTSvg } from "../../assets/ExistentialNFTSvg";
@@ -16,14 +16,9 @@ export const handler = async (
   try {
     await ExistentialNFTRequestQuerySchema.validate(request.query);
 
-    const {
-      name: productName,
-      chain,
-      symbol: NFTSymbol,
-      token,
-      flowrate,
-    } = request.query;
+    const { name, chain, symbol: NFTSymbol, token, flowrate } = request.query;
 
+    const productName = name.replace(/\+/g, " ");
     const tokenAddr = token as string;
     const monthlyFlowRate = Number(getMonthlyEtherValue(flowrate)).toFixed(2);
 

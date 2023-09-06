@@ -1,6 +1,5 @@
 import { VercelResponse } from "@vercel/node";
 import { getAddress } from "ethers/lib/utils";
-import { formatTraitDate } from "../../utils/DateUtils";
 import { networks } from "../../utils/NetworkUtils";
 import { ExistentialNFTRequest } from "../../utils/RequestUtils";
 import { getMonthlyEtherValue } from "../../utils/TokenUtils";
@@ -25,14 +24,15 @@ export const handler = async (
       flowrate,
     } = request.query;
 
+    const productName = name.replace(/\+/g, " ");
+    const productDescription = description.replace(/\+/g, " ");
     const tokenAddr = token;
-    const isListed = true;
     const monthlyFlowRate = getMonthlyEtherValue(flowrate as string);
 
     // best guess for testing, should be config provided for prod
     const baseURL = `https://${request.headers.host}`;
 
-    const imageUrl = `${baseURL}/existential/v1/getsvg?${objectToQueryString(
+    const imageUrl = `${baseURL}/api/v1/existential/getsvg?${objectToQueryString(
       request.query as Record<string, string>
     )}`;
 
@@ -41,8 +41,8 @@ export const handler = async (
     }/${sender}-${recipient}-${tokenAddr}`;
 
     const attributes = [
-      { trait_type: "Product Name", value: name },
-      { trait_type: "Product Description", value: description },
+      { trait_type: "Product Name", value: productName },
+      { trait_type: "Product Description", value: productDescription },
       { trait_type: "Sender", value: sender },
       { trait_type: "Receiver", value: recipient },
       { trait_type: "Token", value: tokenAddr },
