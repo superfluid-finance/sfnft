@@ -69,11 +69,11 @@ export const handler = async (
           name: `Streamgating NFT - ${monthlyFlowRate} ${tokenSymbol} per month`,
           attributes,
           description: `This NFT represents a subscription to ${name} for ${monthlyFlowRate} ${tokenSymbol} per month. The subscription is managed by Superfluid and can be cancelled at any time. The subscription is paid by ${sender} and received by ${recipient}.
-**Sender:** ${getAddress(sender)}${"  "}
-**Receiver:** ${getAddress(recipient)}${"  "}
-**Amount:** ${monthlyFlowRate} per month${"  "}
-**Token:** ${tokenSymbol}${"  "}
-**Network:** ${networks[Number(chain)].name}`,
+          **Sender:** ${getAddress(sender)}
+          **Receiver:** ${getAddress(recipient)}
+          **Amount:** ${monthlyFlowRate} per month
+          **Token:** ${tokenSymbol}
+          **Network:** ${networks[Number(chain)].name}`,
           external_url: streamUrl,
           image: imageUrl,
         })
