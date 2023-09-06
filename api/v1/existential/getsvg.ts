@@ -38,19 +38,18 @@ export const handler = async (
       TIMEOUT
     );
 
-    const svgString =
-      ipfs === ""
-        ? getDefaultExistentialNFTSvg({
-            productName,
-            tokenSymbol,
-            flowRate: monthlyFlowRate,
-            NFTSymbol,
-          })
-        : getExistentialNFTSvg({
-            USER_IMG_Base64: await getImageBase64Data(
-              `https://cloudflare-ipfs.com/ipfs/${ipfs}`
-            ),
-          });
+    const svgString = !ipfs
+      ? getDefaultExistentialNFTSvg({
+          productName,
+          tokenSymbol,
+          flowRate: monthlyFlowRate,
+          NFTSymbol,
+        })
+      : getExistentialNFTSvg({
+          USER_IMG_Base64: await getImageBase64Data(
+            `https://cloudflare-ipfs.com/ipfs/${ipfs}`
+          ),
+        });
 
     response
       .status(200)

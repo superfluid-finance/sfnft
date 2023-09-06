@@ -52,7 +52,7 @@ export const ExistentialNFTRequestQuerySchema = object().shape({
   chain: string()
     .test(...ChainTest)
     .required(),
-  ipfs: string().required(),
+  ipfs: string().optional(),
   symbol: string().required(),
   token: string().required(),
   sender: string()
