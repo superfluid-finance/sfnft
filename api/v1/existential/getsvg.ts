@@ -5,7 +5,11 @@ import { promiseWithTimeout } from "../../utils/ENSUtils";
 import { ExistentialNFTRequest } from "../../utils/RequestUtils";
 import { fetchTokenData, getMonthlyEtherValue } from "../../utils/TokenUtils";
 import { ExistentialNFTRequestQuerySchema } from "../../utils/ValidationUtils";
-import { getDefaultExistentialNFTSvg } from "../../assets/ExistentialNFTSvg";
+import {
+  getDefaultExistentialNFTSvg,
+  getExistentialNFTSvg,
+} from "../../assets/ExistentialNFTSvg";
+import { getImageBase64Data } from "../../utils/ImageUtils";
 
 const TIMEOUT = 9000;
 
@@ -16,7 +20,14 @@ export const handler = async (
   try {
     await ExistentialNFTRequestQuerySchema.validate(request.query);
 
-    const { name, chain, symbol: NFTSymbol, token, flowrate } = request.query;
+    const {
+      name,
+      chain,
+      symbol: NFTSymbol,
+      token,
+      flowrate,
+      ipfs,
+    } = request.query;
 
     const productName = name.replace(/\+/g, " ");
     const tokenAddr = token as string;
@@ -27,12 +38,19 @@ export const handler = async (
       TIMEOUT
     );
 
-    const svgString = getDefaultExistentialNFTSvg({
-      productName,
-      tokenSymbol,
-      flowRate: monthlyFlowRate,
-      NFTSymbol,
-    });
+    const svgString =
+      ipfs === ""
+        ? getDefaultExistentialNFTSvg({
+            productName,
+            tokenSymbol,
+            flowRate: monthlyFlowRate,
+            NFTSymbol,
+          })
+        : getExistentialNFTSvg({
+            USER_IMG_Base64: await getImageBase64Data(
+              `https://cloudflare-ipfs.com/ipfs/${ipfs}`
+            ),
+          });
 
     response
       .status(200)
