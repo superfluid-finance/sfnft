@@ -1,18 +1,11 @@
 import { VercelResponse } from "@vercel/node";
 import { ValidationError } from "yup";
-import { getNFTSVG } from "../../assets/NFTSvg";
-import Blockie from "../../utils/Blockie";
+
 import { promiseWithTimeout } from "../../utils/ENSUtils";
 import { ExistentialNFTRequest, NFTRequest } from "../../utils/RequestUtils";
-import { getTokenSymbolBlockX, shortenHex } from "../../utils/StringUtils";
-import {
-  TokenData,
-  fetchTokenData,
-  fetchTokenIconData,
-  getMonthlyEtherValue,
-  getPrettyEtherFlowRate,
-} from "../../utils/TokenUtils";
+import { fetchTokenData, getMonthlyEtherValue } from "../../utils/TokenUtils";
 import { ExistentialNFTRequestQuerySchema } from "../../utils/ValidationUtils";
+import { getDefaultExistentialNFTSvg } from "../../assets/ExistentialNFTSvg";
 
 const TIMEOUT = 9000;
 
@@ -24,78 +17,26 @@ export const handler = async (
     await ExistentialNFTRequestQuerySchema.validate(request.query);
 
     const {
-      name,
-      description,
+      name: productName,
       chain,
-      symbol,
+      symbol: NFTSymbol,
       token,
-      sender,
-      recipient,
       flowrate,
     } = request.query;
 
     const tokenAddr = token as string;
-    const prettyFlowRate = getPrettyEtherFlowRate(flowrate || "0");
     const monthlyFlowRate = getMonthlyEtherValue(flowrate);
 
-    const senderAbbr = shortenHex(sender);
-    const receiverAbbr = shortenHex(recipient);
-
-    const senderBlockie = new Blockie(sender);
-    const receiverBlockie = new Blockie(recipient);
-
-    // Removed ENS avatars for now:
-    const senderName = undefined;
-    const receiverName = undefined;
-    const senderAvatarData = undefined;
-    const receiverAvatarData = undefined;
-
-    // Fetching all data concurrently with timeout and falling back to undefined values.
-    // If value is missing then it just won't be rendered.
-    const [
-      // senderName,
-      // receiverName,
-      tokenSymbolData,
-      tokenData,
-      // senderAvatarData,
-      // receiverAvatarData,
-    ] = await Promise.allSettled([
-      // promiseWithTimeout(getENSName(sender), TIMEOUT),
-      // promiseWithTimeout(getENSName(receiver), TIMEOUT),
-      promiseWithTimeout(fetchTokenIconData(symbol), TIMEOUT),
-      promiseWithTimeout(
-        fetchTokenData(tokenAddr.toLowerCase(), chain),
-        TIMEOUT
-      ),
-      // promiseWithTimeout(getENSAvatar(sender), TIMEOUT),
-      // promiseWithTimeout(getENSAvatar(receiver), TIMEOUT),
-    ]).then((promiseResults) =>
-      promiseResults.map((promiseResult) =>
-        promiseResult.status === "fulfilled" ? promiseResult.value : undefined
-      )
+    const { symbol: tokenSymbol } = await promiseWithTimeout(
+      fetchTokenData(tokenAddr.toLowerCase(), chain),
+      TIMEOUT
     );
 
-    const isListed = (tokenData as TokenData)?.isListed;
-
-    // Using puppeteer to render SVG and fetch token icon + token symbol + time unit combo width.
-    // This is used to center this block horizontally which was not possible in SVG.
-
-    const svgString = getNFTSVG({
-      prettyFlowRate,
-      monthlyFlowRate,
-      chainId: chain,
-      tokenSymbol: symbol,
-      tokenSymbolData,
-      senderName,
-      senderAvatarData,
-      senderBlockie,
-      senderAbbr,
-      receiverName,
-      receiverAvatarData,
-      receiverBlockie,
-      receiverAbbr,
-      isListed,
-      transformIconSymbolX: getTokenSymbolBlockX(symbol),
+    const svgString = getDefaultExistentialNFTSvg({
+      productName,
+      tokenSymbol,
+      flowRate: monthlyFlowRate,
+      NFTSymbol,
     });
 
     response
