@@ -25,7 +25,7 @@ export const handler = async (
     } = request.query;
 
     const tokenAddr = token as string;
-    const monthlyFlowRate = getMonthlyEtherValue(flowrate);
+    const monthlyFlowRate = Number(getMonthlyEtherValue(flowrate)).toFixed(2);
 
     const { symbol: tokenSymbol } = await promiseWithTimeout(
       fetchTokenData(tokenAddr.toLowerCase(), chain),
