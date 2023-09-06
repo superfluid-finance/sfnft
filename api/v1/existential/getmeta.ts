@@ -2,9 +2,12 @@ import { VercelResponse } from "@vercel/node";
 import { getAddress } from "ethers/lib/utils";
 import { networks } from "../../utils/NetworkUtils";
 import { ExistentialNFTRequest } from "../../utils/RequestUtils";
-import { getMonthlyEtherValue } from "../../utils/TokenUtils";
+import { fetchTokenData, getMonthlyEtherValue } from "../../utils/TokenUtils";
 import { objectToQueryString } from "../../utils/URLUtil";
 import { ExistentialNFTRequestQuerySchema } from "../../utils/ValidationUtils";
+import { promiseWithTimeout } from "../../utils/ENSUtils";
+
+const TIMEOUT = 9000;
 
 export const handler = async (
   request: ExistentialNFTRequest,
@@ -17,7 +20,7 @@ export const handler = async (
       name,
       description,
       chain,
-      symbol,
+      symbol: NFTSymbol,
       token,
       sender,
       recipient,
@@ -26,7 +29,7 @@ export const handler = async (
 
     const productName = name.replace(/\+/g, " ");
     const productDescription = description.replace(/\+/g, " ");
-    const tokenAddr = token;
+    const tokenAddr = token as string;
     const monthlyFlowRate = getMonthlyEtherValue(flowrate as string);
 
     // best guess for testing, should be config provided for prod
@@ -40,13 +43,19 @@ export const handler = async (
       networks[Number(chain)].slug
     }/${sender}-${recipient}-${tokenAddr}`;
 
+    const { symbol: tokenSymbol } = await promiseWithTimeout(
+      fetchTokenData(tokenAddr.toLowerCase(), chain),
+      TIMEOUT
+    );
+
     const attributes = [
       { trait_type: "Product Name", value: productName },
       { trait_type: "Product Description", value: productDescription },
       { trait_type: "Sender", value: sender },
       { trait_type: "Receiver", value: recipient },
       { trait_type: "Token", value: tokenAddr },
-      { trait_type: "Token Symbol", value: symbol },
+      { trait_type: "Token Symbol", value: tokenSymbol },
+      { trait_type: "Existential NFT Symbol", value: NFTSymbol },
       { trait_type: "Flow Rate", value: flowrate },
       { trait_type: "Monthly Flow Rate", value: monthlyFlowRate },
     ];
@@ -57,13 +66,13 @@ export const handler = async (
       .setHeader("Content-Type", "application/json")
       .send(
         JSON.stringify({
-          name: `Streamgating NFT - ${monthlyFlowRate} ${symbol} per month`,
+          name: `Streamgating NFT - ${monthlyFlowRate} ${tokenSymbol} per month`,
           attributes,
-          description: `This NFT represents a subscription to ${name} for ${monthlyFlowRate} ${symbol} per month. The subscription is managed by Superfluid and can be cancelled at any time. The subscription is paid by ${sender} and received by ${recipient}.
+          description: `This NFT represents a subscription to ${name} for ${monthlyFlowRate} ${tokenSymbol} per month. The subscription is managed by Superfluid and can be cancelled at any time. The subscription is paid by ${sender} and received by ${recipient}.
 **Sender:** ${getAddress(sender)}${"  "}
 **Receiver:** ${getAddress(recipient)}${"  "}
 **Amount:** ${monthlyFlowRate} per month${"  "}
-**Token:** ${symbol}${"  "}
+**Token:** ${tokenSymbol}${"  "}
 **Network:** ${networks[Number(chain)].name}`,
           external_url: streamUrl,
           image: imageUrl,
