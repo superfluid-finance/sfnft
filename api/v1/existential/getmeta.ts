@@ -33,7 +33,9 @@ export const handler = async (
     const monthlyFlowRate = getMonthlyEtherValue(flowrate as string);
 
     // best guess for testing, should be config provided for prod
-    const baseURL = `https://${request.headers.host}`;
+    const baseURL = `${request.headers["X-Forwarded-Proto"] ?? "http"}://${
+      request.headers.host
+    }`;
 
     const imageUrl = `${baseURL}/api/v1/existential/getsvg?${objectToQueryString(
       request.query as Record<string, string>
