@@ -65,8 +65,8 @@ export const getDefaultExistentialNFTSvg = ({
                 </g>
             </g>
             <g id="Group 1499">
-                <text id="Product Name" fill="white" xml:space="preserve" style="white-space: pre" font-family="GT Walsheim Pro" font-size="24" letter-spacing="0em" text-anchor="middle">
-                    <tspan x="50%" y="155.86">${productName} (${NFTSymbol})</tspan>
+                <text id="Product Name" fill="white" xml:space="preserve" style="white-space: pre" font-family="GT Walsheim Pro" font-size="24" letter-spacing="0em" text-anchor="middle" x="50%" y="155.86">
+                    ${productName} (${NFTSymbol})
                 </text>
                 <text id="Subscription" fill="#1DB227" xml:space="preserve" style="white-space: pre" font-family="GT Walsheim Pro" font-size="14" letter-spacing="0em">
                     <tspan x="270.091" y="125.585">Subscription</tspan>
@@ -102,10 +102,10 @@ export const getDefaultExistentialNFTSvg = ({
                         <tspan x="329" y="382.311">${tokenSymbol} &#10;</tspan>
                         <tspan x="329" y="397.311">per month</tspan>
                     </text>
-                    <text id="15.00" fill="#2E3A47" xml:space="preserve" style="white-space: pre" font-family="GT Walsheim Pro" font-size="38" letter-spacing="0px" text-anchor="middle">
-                        <tspan x="${
-                          48 - flowRate.length
-                        }%" y="397.171">${flowRate}</tspan>
+                    <text id="15.00" fill="#2E3A47" xml:space="preserve" style="white-space: pre" font-family="GT Walsheim Pro" font-size="38" letter-spacing="0px" text-anchor="middle" x="${
+                      48 - flowRate.length
+                    }%" y="397.171">
+                        ${flowRate}
                     </text>
                 </g>
             </g>
