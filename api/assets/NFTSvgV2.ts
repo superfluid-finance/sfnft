@@ -1,6 +1,5 @@
 import { format } from "date-fns";
 import { networks } from "../utils/NetworkUtils";
-import { DEFAULT_TOKEN, timeUnitWordMap } from "../utils/TokenUtils";
 import { FONT_BASE64 } from "../utils/FontBase64";
 
 export const getNFTSVG = ({
