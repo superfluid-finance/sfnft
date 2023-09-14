@@ -36,7 +36,7 @@ const getFlowRate = (flowRate: string, engine: IEngine) => {
   }
 };
 
-const transform = `transform="scale(0.8) translate(75,140)"`;
+const transform = `transform="scale(0.835) translate(60,110)"`;
 
 export const getDefaultExistentialNFTSvg = ({
   productName,
