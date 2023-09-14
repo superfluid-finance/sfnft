@@ -1,17 +1,47 @@
+import { IEngine } from "ua-parser-js";
 import { FONT_BASE64 } from "../utils/FontBase64";
+import { endOfDay } from "date-fns";
 
 export interface ExistentialNFTArgs {
   productName: string;
   flowRate: string;
   tokenSymbol: string;
   NFTSymbol: string;
+  engine: IEngine;
 }
+
+const getProductName = (
+  productName: string,
+  NFTSymbol: string,
+  engine: IEngine
+) => {
+  switch (engine.name) {
+    case "Gecko":
+      return `<tspan x="50%" y="155.86">${productName} (${NFTSymbol})</tspan>`;
+    case "WebKit":
+    default:
+      return `${productName} (${NFTSymbol})`;
+  }
+};
+
+const getFlowRate = (flowRate: string, engine: IEngine) => {
+  switch (engine.name) {
+    case "Gecko":
+      return `  <tspan x="${
+        48 - flowRate.length
+      }%" y="397.171">${flowRate}</tspan>`;
+    case "WebKit":
+    default:
+      return flowRate;
+  }
+};
 
 export const getDefaultExistentialNFTSvg = ({
   productName,
   flowRate,
   tokenSymbol,
   NFTSymbol,
+  engine,
 }: ExistentialNFTArgs) => `
   <svg width="624" height="661" viewBox="0 0 624 661" fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -66,7 +96,7 @@ export const getDefaultExistentialNFTSvg = ({
             </g>
             <g id="Group 1499">
                 <text id="Product Name" fill="white" xml:space="preserve" style="white-space: pre" font-family="GT Walsheim Pro" font-size="24" letter-spacing="0em" text-anchor="middle" x="50%" y="155.86">
-                    ${productName} (${NFTSymbol})
+                    ${getProductName(productName, NFTSymbol, engine)}
                 </text>
                 <text id="Subscription" fill="#1DB227" xml:space="preserve" style="white-space: pre" font-family="GT Walsheim Pro" font-size="14" letter-spacing="0em">
                     <tspan x="270.091" y="125.585">Subscription</tspan>
@@ -103,9 +133,9 @@ export const getDefaultExistentialNFTSvg = ({
                         <tspan x="329" y="397.311">per month</tspan>
                     </text>
                     <text id="15.00" fill="#2E3A47" xml:space="preserve" style="white-space: pre" font-family="GT Walsheim Pro" font-size="38" letter-spacing="0px" text-anchor="middle" x="${
-                      48 - flowRate.length
+                      47 - flowRate.length
                     }%" y="397.171">
-                        ${flowRate}
+                        ${getFlowRate(flowRate, engine)}
                     </text>
                 </g>
             </g>

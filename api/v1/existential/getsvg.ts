@@ -10,6 +10,7 @@ import {
   getExistentialNFTSvg,
 } from "../../assets/ExistentialNFTSvg";
 import { getImageBase64Data } from "../../utils/ImageUtils";
+import UAParser from "ua-parser-js";
 
 const TIMEOUT = 9000;
 
@@ -38,12 +39,16 @@ export const handler = async (
       TIMEOUT
     );
 
+    const parser = new UAParser(request.headers["user-agent"]);
+    const engine = parser.getEngine();
+
     const svgString = !ipfs
       ? getDefaultExistentialNFTSvg({
           productName,
           tokenSymbol,
           flowRate: monthlyFlowRate,
           NFTSymbol,
+          engine,
         })
       : getExistentialNFTSvg({
           USER_IMG_Base64: await getImageBase64Data(

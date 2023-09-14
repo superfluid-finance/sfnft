@@ -18,6 +18,10 @@
     "ethers": "^5.7.1",
     "express": "^4.17.1",
     "lodash": "^4.17.21",
+    "ua-parser-js": "^1.0.36",
     "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "@types/ua-parser-js": "^0.7.37"
   }
 }
