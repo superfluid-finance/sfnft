@@ -6,6 +6,7 @@ import { fetchTokenData, getMonthlyEtherValue } from "../../utils/TokenUtils";
 import { objectToQueryString } from "../../utils/URLUtil";
 import { ExistentialNFTRequestQuerySchema } from "../../utils/ValidationUtils";
 import { promiseWithTimeout } from "../../utils/ENSUtils";
+import { ValidationError } from "yup";
 
 const TIMEOUT = 9000;
 
@@ -66,9 +67,9 @@ export const handler = async (
       .setHeader("Content-Type", "application/json")
       .send(
         JSON.stringify({
-          name: `Streamgating NFT - ${monthlyFlowRate} ${tokenSymbol} per month`,
+          name: `Stream gating NFT - ${monthlyFlowRate} ${tokenSymbol} per month`,
           attributes,
-          description: `This NFT represents a subscription to ${name} for ${monthlyFlowRate} ${tokenSymbol} per month. The subscription is managed by Superfluid and can be cancelled at any time. The subscription is paid by ${sender} and received by ${recipient}.
+          description: `This NFT represents a subscription to ${name} for ${monthlyFlowRate} ${tokenSymbol} per month. The subscription is managed by Superfluid and can be canceled at any time. The subscription is paid by ${sender} and received by ${recipient}.
           **Sender:** ${getAddress(sender)}
           **Receiver:** ${getAddress(recipient)}
           **Amount:** ${monthlyFlowRate} per month
@@ -79,6 +80,15 @@ export const handler = async (
         })
       );
   } catch (error) {
+    if (error instanceof ValidationError) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({
+          errors: error.errors,
+          field: error.path,
+        }),
+      };
+    }
     response.status(400).send(error);
   }
 };
