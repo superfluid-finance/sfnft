@@ -1,5 +1,5 @@
 import { isAddress } from "ethers/lib/utils";
-import { boolean, object, string } from "yup";
+import yup, { boolean, object, string } from "yup";
 import { networks } from "./NetworkUtils";
 
 const AddressTest = [
@@ -45,3 +45,22 @@ export const NFTRequestQuerySchema = object().shape(
   },
   [["token_address", "token"]]
 );
+
+export const ExistentialNFTRequestQuerySchema = object().shape({
+  name: string().optional(),
+  description: string().optional(),
+  chain: string()
+    .test(...ChainTest)
+    .required(),
+  ipfs: string().optional(),
+  symbol: string().required(),
+  token: string().required(),
+  sender: string()
+    .test(...AddressTest)
+    .required(),
+  recipient: string()
+    .test(...AddressTest)
+    .required(),
+  flowrate: string().required(),
+  clone: string().optional(),
+});

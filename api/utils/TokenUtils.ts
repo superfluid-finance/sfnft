@@ -20,6 +20,8 @@ export interface FlowRateEther {
 export interface TokenData {
   id: string;
   isListed: boolean;
+  name: string;
+  symbol: string;
 }
 
 interface TokenResponse {
