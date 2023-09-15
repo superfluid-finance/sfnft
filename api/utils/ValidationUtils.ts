@@ -47,8 +47,8 @@ export const NFTRequestQuerySchema = object().shape(
 );
 
 export const ExistentialNFTRequestQuerySchema = object().shape({
-  name: string().required(),
-  description: string().required(),
+  name: string().optional(),
+  description: string().optional(),
   chain: string()
     .test(...ChainTest)
     .required(),
@@ -61,7 +61,6 @@ export const ExistentialNFTRequestQuerySchema = object().shape({
   recipient: string()
     .test(...AddressTest)
     .required(),
-
   flowrate: string().required(),
   clone: string().optional(),
 });
